@@ -3,17 +3,18 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ContactCTA from '../components/ContactCTA.astro';
+import { company } from '../data/company';
 import { factSheet, principles } from '../data/content';
 ---
 
 <BaseLayout
   title="Tentang Kami | PT Sentra Niagatama Indonesia"
-  description="Profil PT Sentra Niagatama Indonesia: bidang usaha, prinsip kerja, dan informasi perusahaan yang telah diverifikasi untuk publikasi."
+  description="Profil PT Sentra Niagatama Indonesia: perseroan perorangan berskala usaha mikro di Sleman, Yogyakarta, dengan bidang usaha perdagangan eceran digital."
 >
   <PageHero
     eyebrow="Tentang Kami"
-    title="Perusahaan dagang yang bekerja dengan struktur yang jelas."
-    intro="PT Sentra Niagatama Indonesia bergerak di bidang perdagangan. Halaman ini menjelaskan cara perusahaan bekerja dan informasi apa yang sudah dapat dipublikasikan."
+    title="Perusahaan perdagangan eceran digital yang tercatat resmi."
+    intro={`${company.legalName} adalah perseroan perorangan berskala usaha mikro yang berkedudukan di Sleman, Daerah Istimewa Yogyakarta.`}
   />
 
   <section class="section" aria-labelledby="profil-title">
@@ -21,25 +22,27 @@ import { factSheet, principles } from '../data/content';
       <SectionHeading
         index="01"
         label="Profil Perusahaan"
-        title="Kebutuhan dipahami lebih dahulu, keputusan diambil bersama."
+        title="Perseroan perorangan dengan kegiatan usaha yang tercatat."
         headingId="profil-title"
       >
         <div class="prose">
           <p>
-            PT Sentra Niagatama Indonesia bergerak di bidang perdagangan. Sebagai perusahaan
-            dagang, pekerjaan kami berpusat pada pemenuhan kebutuhan mitra bisnis: memahami
-            permintaan, menyepakati spesifikasi, dan menjaga agar proses berjalan sesuai
-            kesepakatan.
+            {company.legalName} didirikan sebagai perseroan perorangan untuk usaha mikro. Pendirian
+            disahkan pada {company.legal.deedDate} melalui {company.legal.deedLabel} bernomor
+            {company.legal.deed}, dan Nomor Induk Berusaha diterbitkan pada {company.legal.nibIssued}.
           </p>
           <p>
-            Kami menempatkan kejelasan informasi sebagai bagian dari proses kerja. Setiap kebutuhan
-            dibahas sampai detail yang relevan dipahami bersama, sehingga tidak ada asumsi yang
-            dibiarkan menggantikan kesepakatan.
+            Kegiatan usaha berpusat pada perdagangan eceran melalui platform digital, layanan portal
+            intermediasi pos dan kurir, serta perdagangan eceran barang baru. Ketiganya tercatat
+            dalam dokumen pendirian dengan kode KBLI 2025 yang berlaku.
           </p>
           <p>
-            Pendekatan ini berlaku untuk semua tahap: dari percakapan awal mengenai kebutuhan,
-            penyusunan penawaran, hingga konfirmasi setelah pekerjaan selesai. Setiap tahap
-            memiliki rujukan yang sama bagi kedua pihak.
+            Domisili perusahaan berada di Gamping, Kabupaten Sleman, Daerah Istimewa Yogyakarta.
+            Informasi kontak resmi tersedia pada halaman kontak untuk kebutuhan penawaran maupun
+            pertanyaan tertulis.
+          </p>
+          <p>
+            <a class="link-arrow" href="/layanan">Bidang usaha dan alur kerja</a>
           </p>
         </div>
       </SectionHeading>
@@ -73,7 +76,7 @@ import { factSheet, principles } from '../data/content';
       <SectionHeading
         index="03"
         label="Informasi Perusahaan"
-        title="Data perusahaan yang dapat dipublikasikan."
+        title="Data perusahaan menurut dokumen resmi."
         headingId="informasi-title"
       >
         <dl class="fact-sheet">
@@ -93,9 +96,9 @@ import { factSheet, principles } from '../data/content';
           }
         </dl>
         <p class="fact-sheet__note">
-          Data legalitas dan domisili hanya ditampilkan setelah dokumen perusahaan terverifikasi.
-          Kolom yang belum terisi sengaja dibiarkan kosong agar tidak ada informasi yang tidak
-          akurat.
+          Data di atas mengacu pada {company.legal.deedLabel} dan dokumen Nomor Induk Berusaha.
+          Nomor rekening, nomor identitas pendiri, serta dokumen perpajakan tidak dipublikasikan
+          pada situs ini.
         </p>
       </SectionHeading>
     </div>

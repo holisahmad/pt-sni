@@ -11,13 +11,13 @@ const formEnabled = Boolean(contactFormEndpoint);
 
 <BaseLayout
   title="Hubungi Kami | PT Sentra Niagatama Indonesia"
-  description="Halaman kontak PT Sentra Niagatama Indonesia: kanal resmi, formulir, dan status informasi yang menunggu verifikasi perusahaan."
+  description="Kanal kontak resmi PT Sentra Niagatama Indonesia: email, telepon, dan alamat kantor sesuai dokumen Nomor Induk Berusaha."
 >
   <PageHero
     eyebrow="Hubungi Kami"
     title="Sampaikan kebutuhan Anda."
     intro="Halaman ini memuat kanal resmi PT Sentra Niagatama Indonesia untuk pertanyaan, permintaan penawaran, dan kerja sama bisnis."
-    note="Data kontak resmi belum dipublikasikan. Halaman ini diperbarui setelah verifikasi perusahaan selesai."
+    note="Jam operasional layanan belum ditetapkan perusahaan."
   />
 
   <section class="section" aria-labelledby="kanal-title">
@@ -49,8 +49,8 @@ const formEnabled = Boolean(contactFormEndpoint);
         </dl>
 
         <p class="channels__disclaimer">
-          Kanal kontak hanya ditampilkan setelah terverifikasi. Situs ini tidak memuat alamat,
-          nomor telepon, atau email perkiraan.
+          Alamat yang tercantum adalah alamat terdaftar pada dokumen Nomor Induk Berusaha. Situs ini
+          tidak memuat nomor identitas pendiri maupun dokumen perpajakan.
         </p>
       </SectionHeading>
     </div>
@@ -74,11 +74,12 @@ const formEnabled = Boolean(contactFormEndpoint);
             <div class="form-pending">
               <p class="form-pending__title">Formulir belum diaktifkan</p>
               <p class="form-pending__text">
-                Formulir akan diaktifkan bersama publikasi alamat email resmi perusahaan. Dengan
-                begitu, setiap pesan yang dikirim memiliki tujuan yang jelas dan dipantau.
+                Formulir daring belum disediakan pada situs ini. Permintaan dapat disampaikan
+                langsung melalui alamat email resmi atau nomor telepon pada bagian kanal resmi di
+                atas.
               </p>
               <p class="form-pending__text">
-                Hingga kanal resmi ditetapkan, pesan tidak dapat dikirim melalui situs ini.
+                Pesan melalui situs ini tidak dapat dikirim hingga formulir diaktifkan.
               </p>
             </div>
           )

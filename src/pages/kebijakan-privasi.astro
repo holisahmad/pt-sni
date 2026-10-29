@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import SectionHeading from '../components/SectionHeading.astro';
-import { buildMonthLabel, contactFormEndpoint } from '../data/company';
+import { buildMonthLabel, company, contactFormEndpoint } from '../data/company';
 
 const formActive = Boolean(contactFormEndpoint);
 ---
@@ -60,8 +60,8 @@ const formActive = Boolean(contactFormEndpoint);
             ) : (
               <p>
                 Formulir kontak pada situs ini belum diaktifkan, sehingga tidak ada data yang
-                dikirim melalui formulir. Formulir hanya akan diaktifkan setelah alamat email resmi
-                perusahaan ditetapkan, agar tujuan pengiriman jelas dan dipantau.
+                dikirim melalui formulir. Permintaan dapat disampaikan melalui alamat email resmi
+                yang tercantum pada halaman <a href="/kontak">Hubungi Kami</a>.
               </p>
             )
           }
@@ -111,9 +111,9 @@ const formActive = Boolean(contactFormEndpoint);
             cara data ditangani. Tanggal pembaruan tercantum di bawah.
           </p>
           <p>
-            Pertanyaan mengenai pengelolaan data dapat disampaikan melalui kanal kontak resmi
-            setelah kanal tersebut dipublikasikan pada halaman
-            <a href="/kontak">Hubungi Kami</a>.
+            Pertanyaan mengenai pengelolaan data dapat disampaikan melalui alamat email resmi
+            {company.contact.email ? ` (${company.contact.email})` : ''} atau kanal kontak lain
+            pada halaman <a href="/kontak">Hubungi Kami</a>.
           </p>
           <p class="privacy-updated">Terakhir diperbarui: {buildMonthLabel}</p>
         </div>

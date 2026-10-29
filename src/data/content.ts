@@ -44,6 +44,39 @@ export const processSteps = [
   },
 ];
 
+export interface BusinessLine {
+  /** Kode KBLI 2025 yang tercatat pada dokumen pendirian. */
+  code: string;
+  /** Judul resmi KBLI. */
+  title: string;
+  description: string;
+}
+
+/**
+ * Kegiatan usaha menurut Surat Pernyataan Pendirian (14 Juli 2026).
+ * Pada lampiran NIB hanya KBLI 47901 yang tercantum dengan status "Terbit".
+ */
+export const businessLines: BusinessLine[] = [
+  {
+    code: '47901',
+    title: 'Platform Digital Intermediasi Perdagangan Eceran',
+    description:
+      'Penyelenggaraan platform digital perdagangan eceran, mencakup penyelenggara perdagangan melalui sistem elektronik (PPMSE) dan penyelenggara sarana perantara (PSP).',
+  },
+  {
+    code: '53301',
+    title: 'Aktivitas Jasa Portal Intermediasi Pos dan Kurir',
+    description:
+      'Layanan portal intermediasi untuk kegiatan pos dan kurir.',
+  },
+  {
+    code: '47709',
+    title: 'Perdagangan Eceran Barang Baru Lainnya YTDL',
+    description:
+      'Perdagangan eceran barang baru yang tidak tercakup pada kelompok KBLI lain (YTDL).',
+  },
+];
+
 /** Prinsip kerja yang dapat dijelaskan tanpa klaim superlatif. */
 export const principles = [
   {
@@ -72,10 +105,18 @@ export interface FactRow {
 export const factSheet: FactRow[] = [
   { label: 'Nama resmi', value: company.legalName },
   { label: 'Bentuk badan usaha', value: company.entityType },
+  { label: 'Skala usaha', value: company.scale },
   { label: 'Bidang usaha', value: company.sector },
   { label: 'Alamat kantor', value: company.contact.address },
-  { label: 'Tahun berdiri', value: null },
-  { label: 'Nomor induk berusaha', value: null },
+  { label: 'Tahun berdiri', value: String(company.founded.year) },
+  {
+    label: 'Nomor Induk Berusaha',
+    value: `${company.legal.nib} (terbit ${company.legal.nibIssued})`,
+  },
+  {
+    label: 'Pengesahan pendirian',
+    value: `${company.legal.deed} (${company.legal.deedDate})`,
+  },
 ];
 
 export interface ContactChannelRow {
@@ -93,20 +134,21 @@ export const contactChannels: ContactChannelRow[] = [
     note: 'Untuk permintaan penawaran dan pertanyaan tertulis.',
   },
   {
-    label: 'Telepon / WhatsApp',
+    label: 'Telepon',
     value: company.contact.phone,
-    href: company.contact.phone ? `tel:${company.contact.phone.replace(/[^+\d]/g, '')}` : null,
-    note: 'Untuk komunikasi langsung pada jam kerja.',
+    href: company.contact.phoneHref ? `tel:${company.contact.phoneHref}` : null,
+    note: 'Nomor seluler yang terdaftar pada NIB.',
   },
   {
     label: 'Kantor',
     value: company.contact.address,
     href: null,
-    note: 'Kunjungan hanya dengan perjanjian terlebih dahulu.',
+    note: 'Alamat terdaftar sesuai dokumen NIB.',
   },
   {
     label: 'Jam operasional',
     value: company.contact.hours,
     href: null,
+    note: 'Belum ditetapkan perusahaan.',
   },
 ];

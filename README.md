@@ -1,16 +1,18 @@
 # Website Company Profile — PT Sentra Niagatama Indonesia
 
 Situs profil perusahaan statis (Astro + TypeScript + CSS murni) untuk PT Sentra Niagatama Indonesia,
-sebuah perseroan terbatas yang bergerak di bidang perdagangan.
+perseroan perorangan berskala usaha mikro yang bergerak di bidang perdagangan eceran digital di Gamping,
+Sleman, Daerah Istimewa Yogyakarta.
 
 Spesifikasi proyek:
 [`WEBSITE_COMPANY_PROFILE_PT_SENTRA_NIAGATAMA_INDONESIA.md`](WEBSITE_COMPANY_PROFILE_PT_SENTRA_NIAGATAMA_INDONESIA.md).
-Data perusahaan yang belum terverifikasi didaftar di
+Status setiap data perusahaan (terverifikasi / menunggu / sengaja tidak dipublikasikan) didaftar di
 [`CONTENT_REQUIREMENTS.md`](CONTENT_REQUIREMENTS.md).
 
-Prinsip yang dipegang di repositori ini: **tidak ada klaim yang belum terverifikasi**. Bagian yang
-datanya belum tersedia ditampilkan sebagai status jujur ("Belum dipublikasikan"), bukan diisi teks
-karangan atau placeholder tersembunyi.
+Prinsip yang dipegang di repositori ini: **tidak ada klaim yang belum terverifikasi**. Data yang belum
+ada dokumennya ditampilkan sebagai status jujur ("Belum dipublikasikan"), bukan diisi teks karangan atau
+placeholder tersembunyi. Identitas badan usaha, NIB, dan cakupan KBLI diambil dari dokumen resmi yang
+diberikan perusahaan; NIK, NPWP, dan nama pendiri tidak pernah disimpan di repositori ini.
 
 ---
 
@@ -53,16 +55,17 @@ Semua variabel bersifat opsional; situs tetap build dan berfungsi tanpanya.
 Domain produksi, dipakai untuk `canonical`, `og:url`, `url` pada structured data, isi `sitemap.xml`,
 dan baris `Sitemap:` di `robots.txt`.
 
+Nilai default sudah diisi `https://pt-sni.vercel.app` di [`site.config.mjs`](site.config.mjs), sehingga
+build otomatis Vercel (tanpa variabel lingkungan) tetap menghasilkan canonical dan sitemap yang benar.
+Untuk domain kustom atau server internal, timpa nilainya:
+
 ```powershell
 $env:SITE_URL = "https://domain-perusahaan.co.id"
 npm run build
 ```
 
-Jika kosong (kondisi default saat ini karena domain belum ditetapkan):
-
-- `canonical` dan `og:url` **tidak** dirender — lebih baik tidak ada daripada menunjuk domain salah.
-- `sitemap.xml` tetap tersedia tetapi `<urlset>` kosong, dan `npm run qa:build` mengeluarkan satu
-  peringatan yang memang diharapkan.
+`site.config.mjs` dibaca oleh `astro.config.mjs` **dan** `scripts/qa-build.mjs`, jadi QA memvalidasi
+canonical/sitemap terhadap URL yang sama persis dengan yang dipakai build.
 
 ### `PUBLIC_CONTACT_FORM_ENDPOINT`
 
@@ -111,6 +114,7 @@ public/
   apple-touch-icon.png            Ikon 180px untuk iOS
   fonts/inter-latin-var.woff2     Inter Variable, subset latin, self-hosted
   fonts/Inter-LICENSE.txt         Lisensi SIL OFL 1.1
+site.config.mjs                   URL produksi default (dipakai astro.config + QA build)
 scripts/
   qa-build.mjs                    Audit HTML hasil build (SEO, heading, tautan, anchor, form)
   mock-form-endpoint.mjs          Endpoint tiruan untuk uji formulir lokal
@@ -119,8 +123,8 @@ tests/unit/
   inquiry.test.ts                 Validasi & payload formulir
   navigation.test.ts              Normalisasi path & status menu aktif
 src/
-  data/company.ts                 Identitas + kontak perusahaan (sumber tunggal)
-  data/content.ts                 Navigasi, alur kerja, prinsip, fact sheet, kanal kontak
+  data/company.ts                 Identitas, legalitas (NIB/AHU), tanggal, dan kontak (sumber tunggal)
+  data/content.ts                 Navigasi, lini usaha KBLI, alur kerja, prinsip, fact sheet, kanal kontak
   lib/inquiry.ts                  Validasi formulir murni (tanpa DOM)
   lib/navigation.ts               Helper path aktif
   layouts/BaseLayout.astro        <head>, skip link, header, main, footer
@@ -158,10 +162,10 @@ Seluruh nilai visual berasal dari [`src/styles/tokens.css`](src/styles/tokens.cs
 
 1. **Data perusahaan** hanya diubah di `src/data/company.ts`. Nilai yang belum diverifikasi wajib
    `null`; UI sudah menangani `null` dengan status jujur.
-2. **Konten struktural** (navigasi, alur kerja, prinsip, fact sheet, kanal kontak) ada di
+2. **Konten struktural** (navigasi, lini usaha KBLI, alur kerja, prinsip, fact sheet, kanal kontak) ada di
    `src/data/content.ts`.
 3. **Teks halaman** berada di masing-masing file `src/pages/*.astro`.
-4. Setelah data baru disetujui, isi nilai di `company.ts`/`content.ts`, hapus baris terkait di
+4. Setelah data baru disetujui, isi nilai di `company.ts`/`content.ts`, perbarui status baris terkait di
    `CONTENT_REQUIREMENTS.md`, lalu jalankan `npm run verify`.
 5. `npm run qa:build` akan gagal jika muncul teks placeholder (`lorem`, `ipsum`, `TODO`, `XXXX`).
 
@@ -170,15 +174,20 @@ Seluruh nilai visual berasal dari [`src/styles/tokens.css`](src/styles/tokens.cs
 Build statis: unggah isi `dist/` ke hosting apa pun (Netlify, Vercel, Cloudflare Pages, GitHub Pages,
 Nginx, Apache).
 
-1. Set `SITE_URL` pada lingkungan build hosting agar canonical/sitemap benar.
-2. Set `PUBLIC_CONTACT_FORM_ENDPOINT` jika formulir kontak diaktifkan.
-3. Build command: `npm run build` — output directory: `dist`.
-4. **Halaman 404**: `404.html` sudah dihasilkan di root `dist/`. Hosting statis umumnya memakainya
+1. **Vercel (kondisi saat ini).** Repositori terhubung ke Vercel; setiap push ke `main` memicu build
+   otomatis dengan `npm run build` dan output `dist`. Proyek: <https://pt-sni.vercel.app>. Canonical dan
+   sitemap sudah memakai URL tersebut lewat default di `site.config.mjs` — tidak perlu variabel
+   lingkungan tambahan.
+2. Set `SITE_URL` pada lingkungan build hanya bila memakai domain kustom atau server lain (menimpa
+   default).
+3. Set `PUBLIC_CONTACT_FORM_ENDPOINT` jika formulir kontak diaktifkan.
+4. Build command: `npm run build` — output directory: `dist`.
+5. **Halaman 404**: `404.html` sudah dihasilkan di root `dist/`. Hosting statis umumnya memakainya
    otomatis; pada Nginx tambahkan `error_page 404 /404.html;`.
-5. Routing tanpa ekstensi (mis. `/tentang-kami`) mengandalkan `directory index`
+6. Routing tanpa ekstensi (mis. `/tentang-kami`) mengandalkan `directory index`
    (`/tentang-kami/index.html`). Fitur ini standar pada Netlify, Vercel, Cloudflare Pages, dan GitHub
    Pages. Jika memakai server kustom, pastikan `index.html` direktori dilayani.
-6. Font di `/fonts/` sebaiknya dikirim dengan cache panjang (`Cache-Control: public, max-age=31536000,
+7. Font di `/fonts/` sebaiknya dikirim dengan cache panjang (`Cache-Control: public, max-age=31536000,
    immutable`) karena nama berkas stabil.
 
 ### 8.1 Server internal (192.168.89.72)
@@ -204,10 +213,10 @@ landing page), karena `holis` bukan sudoer.
 ## 9. Pengujian
 
 ```powershell
-npm run check      # 0 error, 0 warning, 0 hint (28 berkas)
+npm run check      # 0 error, 0 warning, 0 hint (30 berkas)
 npm test           # 22 test lulus
 npm run build      # 5 halaman publik + 404 + robots.txt + sitemap.xml
-npm run qa:build   # 324 pemeriksaan, 1 peringatan (sitemap kosong), 0 error
+npm run qa:build   # 348 pemeriksaan, 0 peringatan, 0 error
 npm run verify     # semuanya sekaligus
 ```
 
@@ -225,17 +234,18 @@ Cakupan:
   keberadaan `robots.txt`, `sitemap.xml`, `favicon-32.png`, `apple-touch-icon.png`,
   `logo/sentra-mark.png`, `404.html`, dan berkas font.
 
-Hasil build & QA terakhir (build default, tanpa variabel lingkungan): **324 pemeriksaan lolos, 0 error,
-1 peringatan** — peringatan tersebut adalah `sitemap.xml` kosong karena `SITE_URL` belum ditetapkan.
-Dengan `SITE_URL` diset: 332 pemeriksaan lolos, 0 peringatan. Dengan `PUBLIC_CONTACT_FORM_ENDPOINT`
-diset (tanpa `SITE_URL`): 339 pemeriksaan lolos, 0 error.
+Hasil build & QA terakhir (build default, tanpa variabel lingkungan): **348 pemeriksaan lolos, 0 error,
+0 peringatan**. Angka ini sama ketika `SITE_URL` ditimpa ke domain lain karena QA membaca URL yang sama
+dengan build. Dengan `PUBLIC_CONTACT_FORM_ENDPOINT` diset, pemeriksaan bertambah (formulir aktif) dan tetap
+0 error.
 
 Pemeriksaan manual yang sudah dilakukan pada hasil build di browser: tidak ada error console, tidak ada
 overflow horizontal pada 320/360/390/768/1280/1440px (header dengan logo diukur langsung: `scrollWidth`
-sama dengan lebar viewport, jarak wordmark–tombol menu minimal 24px, teks tidak terpotong), menu mobile
-dapat dibuka/ditutup dengan keyboard (Escape mengembalikan fokus ke tombol), 404 mengembalikan status HTTP
-404, dan alur formulir (validasi kosong, fokus ke field bermasalah, status "Mengirim...", sukses, reset)
-berjalan terhadap endpoint tiruan.
+sama dengan lebar viewport, jarak wordmark–tombol menu minimal 24px, teks tidak terpotong), blok kontak
+footer (email, telepon, alamat) diukur pada 320/360/390px: `scrollWidth` sama dengan `innerWidth` dan
+tidak ada elemen yang melewati tepi kanan viewport, menu mobile dapat dibuka/ditutup dengan keyboard
+(Escape mengembalikan fokus ke tombol), 404 mengembalikan status HTTP 404, dan alur formulir (validasi
+kosong, fokus ke field bermasalah, status "Mengirim...", sukses, reset) berjalan terhadap endpoint tiruan.
 
 ## 10. Aset dan lisensi
 
@@ -259,8 +269,10 @@ berjalan terhadap endpoint tiruan.
   formulir yang tampak berfungsi tetapi membuang pesan pengunjung.
 - **"Cara Kerja" bukan halaman terpisah** melainkan anchor `/layanan#cara-kerja`; item menu tetap ada
   sesuai spesifikasi dan anchor divalidasi oleh QA build.
-- **Structured data minimal.** Hanya `Organization` dengan `name`, `legalName`, `description`, dan
-  `url` (bila `SITE_URL` ada). Tidak ada alamat, telepon, atau `foundingDate` karena belum terverifikasi.
+- **Structured data dari dokumen resmi.** `Organization` memuat `name`, `legalName`, `description`,
+  `foundingDate`, `email`, `telephone`, `PostalAddress` (jalan, kota, provinsi, kode pos), `identifier`
+  berupa NIB, dan `url` bila `SITE_URL` tersedia. Semuanya berasal dari `src/data/company.ts`; NPWP dan
+  NIK sengaja tidak dirender.
 - **Visual tanpa fotografi.** Bidang hero (navy bergaris) dan diagram alur kerja dibangun dari CSS
   dan SVG inline. Tidak ada foto stok yang menampilkan fasilitas atau produk yang belum tentu milik
   perusahaan.
@@ -280,15 +292,19 @@ informasi yang hanya tersedia sebagai gambar.
 
 ## 12. Batasan dan pekerjaan tersisa
 
-- Domain produksi belum ditetapkan → `canonical`, `og:url`, dan isi sitemap menunggu `SITE_URL`.
+- Domain produksi saat ini `https://pt-sni.vercel.app` (default di `site.config.mjs`). Bila memakai domain
+  kustom, set `SITE_URL` di lingkungan build Vercel agar canonical dan sitemap ikut berubah.
 - Logo tersedia hanya sebagai raster (tanpa SVG) dan belum ada versi putih/monokrom resmi; header
   memakai lambang apa adanya, sedangkan footer menunggu berkas yang disetujui untuk latar gelap.
 - Tagline pada berkas logo ("IT TRADING & SERVICES") belum dipakai di situs karena belum ada
   keputusan apakah bidang usaha dijelaskan sebagai perdagangan perangkat TI + layanan (lihat
   `CONTENT_REQUIREMENTS.md` butir 3).
 - Formulir kontak belum aktif → menunggu endpoint dan persetujuan kebijakan pengelolaan data.
-- Seluruh data kontak, legalitas, kategori barang, sejarah, dan pencapaian masih `NEEDS_CONFIRMATION`
-  (lihat `CONTENT_REQUIREMENTS.md`). Sampai data itu disetujui, situs sengaja menampilkan status kosong.
+- Data yang masih `NEEDS_CONFIRMATION`: jam operasional, kategori barang/produk yang dijual, layanan
+  operasional rinci, sejarah, visi-misi, wilayah layanan, dan profil manajemen (lihat
+  `CONTENT_REQUIREMENTS.md`). Sampai data itu disetujui, situs sengaja menampilkan status kosong.
+- Label nomor kontak masih "Telepon" karena status WhatsApp belum dikonfirmasi, dan email yang dipakai
+  adalah alamat Gmail pada NIB — bukan email domain perusahaan.
 - Copywriting (hero, alur kerja, prinsip, halaman kontak) adalah **draf** yang diturunkan dari
   spesifikasi dan perlu persetujuan perusahaan sebelum publikasi.
 - Tidak ada analitik, cookie, atau pelacakan — sesuai spesifikasi; belum ada kebutuhan yang

@@ -20,16 +20,38 @@ export const company = {
     country: 'Indonesia',
     prefix: 'PT',
   },
-  entityType: 'Perseroan Terbatas',
-  sector: 'Perdagangan',
+  entityType: 'Perseroan Perorangan',
+  scale: 'Usaha Mikro',
+  sector: 'Perdagangan eceran digital',
   /** Ringkasan satu kalimat (disetujui untuk footer). */
   summary:
-    'Perusahaan dagang yang berfokus pada proses bisnis yang jelas dan komunikasi yang profesional.',
+    'Perusahaan perdagangan eceran digital di Sleman, Yogyakarta, yang menjalankan platform dan layanan pendukungnya.',
+  /** Tanggal pendirian menurut akta (14 Juli 2026) dan NIB terbit (15 Juli 2026). */
+  founded: {
+    iso: '2026-07-14',
+    year: 2026,
+    label: '14 Juli 2026',
+  },
   contact: {
-    email: null as string | null,
-    phone: null as string | null,
-    address: null as string | null,
+    email: 'ptsentraniagatamaindonesia@gmail.com' as string | null,
+    /** Bentuk tampilan; `phoneHref` dipakai untuk tautan telepon. */
+    phone: '0822-3381-7057' as string | null,
+    phoneHref: '+6282233817057' as string | null,
+    address:
+      'Mejing Wetan, RT 003/RW 004, Ambarketawang, Gamping, Sleman, Daerah Istimewa Yogyakarta 55294' as string | null,
+    addressLocality: 'Gamping, Sleman' as string | null,
+    addressRegion: 'Daerah Istimewa Yogyakarta' as string | null,
+    postalCode: '55294' as string | null,
     hours: null as string | null,
+  },
+  /** Identitas legal yang boleh dipublikasikan (NIB dan pengesahan pendirian). */
+  legal: {
+    nib: '1507260071028',
+    nibIssued: '15 Juli 2026',
+    nibRisk: 'Risiko rendah',
+    deed: 'AHU-A104374.AH.01.30.Tahun 2026',
+    deedLabel: 'Surat Pernyataan Pendirian',
+    deedDate: '14 Juli 2026',
   },
 } as const;
 

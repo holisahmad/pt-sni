@@ -1,11 +1,12 @@
 import { defineConfig } from 'astro/config';
+import { DEFAULT_SITE_URL } from './site.config.mjs';
 
-// Domain produksi belum ditetapkan. Set SITE_URL (mis. https://contoh.co.id) saat
-// build agar canonical, Open Graph URL, dan sitemap.xml memakai URL absolut.
-const siteUrl = process.env.SITE_URL?.trim();
+// Default: URL Vercel (lihat site.config.mjs). Timpa dengan SITE_URL saat build
+// memakai domain kustom, mis. SITE_URL=https://contoh.co.id npm run build.
+const siteUrl = (process.env.SITE_URL?.trim() || DEFAULT_SITE_URL).replace(/\/+$/, '');
 
 export default defineConfig({
-  site: siteUrl || undefined,
+  site: siteUrl,
   output: 'static',
   trailingSlash: 'ignore',
   compressHTML: true,

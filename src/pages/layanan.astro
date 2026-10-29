@@ -4,16 +4,17 @@ import PageHero from '../components/PageHero.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ProcessSteps from '../components/ProcessSteps.astro';
 import ContactCTA from '../components/ContactCTA.astro';
+import { businessLines } from '../data/content';
 ---
 
 <BaseLayout
   title="Bidang Perdagangan | PT Sentra Niagatama Indonesia"
-  description="Bidang perdagangan PT Sentra Niagatama Indonesia beserta alur kerja dan informasi yang dibutuhkan untuk menyampaikan permintaan."
+  description="Bidang usaha PT Sentra Niagatama Indonesia menurut KBLI 2025: platform digital perdagangan eceran, portal intermediasi pos dan kurir, serta eceran barang baru."
 >
   <PageHero
     eyebrow="Bidang Perdagangan"
-    title="Bidang usaha dan alur kerja yang kami gunakan."
-    intro="Halaman ini menjelaskan bidang usaha yang dijalankan PT Sentra Niagatama Indonesia serta alur kerja yang digunakan saat menangani permintaan mitra bisnis."
+    title="Bidang usaha menurut klasifikasi resmi."
+    intro="Kegiatan usaha PT Sentra Niagatama Indonesia tercatat dalam dokumen pendirian dengan kode KBLI 2025. Halaman ini menjelaskan cakupan tersebut beserta alur kerja yang digunakan."
   />
 
   <section class="section" aria-labelledby="bidang-title">
@@ -21,31 +22,42 @@ import ContactCTA from '../components/ContactCTA.astro';
       <SectionHeading
         index="01"
         label="Bidang Usaha"
-        title="Perdagangan."
+        title="Tiga kegiatan usaha yang tercatat."
         headingId="bidang-title"
       >
         <div class="bidang">
           <div class="prose">
             <p>
-              Perdagangan merupakan bidang usaha utama PT Sentra Niagatama Indonesia. Setiap
-              keterlibatan dimulai dari pemahaman atas kebutuhan mitra, lalu dituangkan menjadi
-              kesepakatan kerja yang jelas mengenai barang, jumlah, dan ketentuan lain yang
-              relevan.
+              Kegiatan usaha utama perusahaan adalah penyelenggaraan platform digital untuk
+              perdagangan eceran. Klasifikasi berikut adalah kode KBLI 2025 pada dokumen
+              pendirian, bukan daftar produk yang dijual.
             </p>
             <p>
-              Ruang lingkup ditetapkan per kesepakatan. Dengan begitu, persyaratan kerja mengikuti
-              kebutuhan nyata mitra dan tidak bergantung pada asumsi umum.
+              Cakupan produk dan syarat kerja ditetapkan per kesepakatan, sehingga persyaratan
+              mengikuti kebutuhan nyata mitra dan tidak bergantung pada asumsi umum.
             </p>
           </div>
 
           <div class="bidang__note">
-            <p class="bidang__note-title">Cakupan kategori</p>
+            <p class="bidang__note-title">Dasar pencatatan</p>
             <p class="bidang__note-text">
-              Kategori barang yang ditangani dan cakupan layanan operasional belum dipublikasikan
-              pada situs ini. Informasi tersebut ditampilkan setelah melalui verifikasi perusahaan.
+              Kode KBLI 47901 tercantum dengan status terbit pada lampiran Nomor Induk Berusaha.
+              Kode 53301 dan 47709 tercatat pada Surat Pernyataan Pendirian.
             </p>
           </div>
         </div>
+
+        <ul class="lines">
+          {
+            businessLines.map((line) => (
+              <li class="lines__item">
+                <p class="lines__code">KBLI {line.code}</p>
+                <h3 class="lines__title">{line.title}</h3>
+                <p class="lines__desc">{line.description}</p>
+              </li>
+            ))
+          }
+        </ul>
       </SectionHeading>
     </div>
   </section>
@@ -74,11 +86,11 @@ import ContactCTA from '../components/ContactCTA.astro';
         intro="Saat menyampaikan permintaan, sertakan informasi berikut bila sudah tersedia."
       >
         <ul class="checklist">
-          <li class="checklist__item">Jenis barang atau kategori yang dibutuhkan</li>
-          <li class="checklist__item">Spesifikasi teknis atau standar mutu, bila ada</li>
-          <li class="checklist__item">Perkiraan jumlah dan satuan</li>
-          <li class="checklist__item">Waktu atau jadwal kebutuhan</li>
-          <li class="checklist__item">Lokasi penerimaan barang, bila relevan</li>
+          <li class="checklist__item">Jenis transaksi atau layanan yang dibutuhkan</li>
+          <li class="checklist__item">Kategori barang atau mitra yang akan terlibat</li>
+          <li class="checklist__item">Perkiraan volume dan jangka waktu kegiatan</li>
+          <li class="checklist__item">Kanal atau sistem yang sudah digunakan, bila ada</li>
+          <li class="checklist__item">Lokasi pengiriman atau jangkauan layanan</li>
           <li class="checklist__item">Dokumen pendukung, bila diperlukan</li>
         </ul>
         <p class="checklist__note">
@@ -124,6 +136,55 @@ import ContactCTA from '../components/ContactCTA.astro';
     color: var(--neutral-muted);
     font-size: var(--text-sm);
     line-height: 1.65;
+    max-width: 38ch;
+  }
+
+  .lines {
+    display: grid;
+    gap: 0;
+    margin-top: var(--space-7);
+    border-top: var(--border);
+  }
+
+  @media (min-width: 720px) {
+    .lines {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: var(--space-6);
+    }
+  }
+
+  .lines__item {
+    padding-block: var(--space-5);
+    border-bottom: var(--border);
+  }
+
+  @media (min-width: 720px) {
+    .lines__item {
+      border-bottom: none;
+    }
+  }
+
+  .lines__code {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--brand-red);
+  }
+
+  .lines__title {
+    margin-top: var(--space-2);
+    font-size: 1.0625rem;
+    line-height: 1.35;
+    max-width: 26ch;
+  }
+
+  .lines__desc {
+    margin-top: var(--space-2);
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
     max-width: 38ch;
   }
 

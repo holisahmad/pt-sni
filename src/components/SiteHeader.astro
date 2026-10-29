@@ -99,7 +99,7 @@ const navItems = mainNavigation.map((item) => ({
         <ArrowRight size={16} aria-hidden="true" />
       </a>
       <p class="site-menu__note">
-        Data kontak resmi ditampilkan pada halaman kontak setelah diverifikasi.
+        {company.contact.email ?? 'Kanal kontak resmi tersedia pada halaman kontak.'}
       </p>
     </nav>
   </div>

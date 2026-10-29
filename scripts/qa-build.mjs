@@ -10,9 +10,11 @@
 import { existsSync, readFileSync, readdirSync, statSync } from 'node:fs';
 import { extname, join, relative, resolve } from 'node:path';
 import { parse } from 'node-html-parser';
+import { DEFAULT_SITE_URL } from '../site.config.mjs';
 
 const DIST = resolve('dist');
-const SITE_URL = process.env.SITE_URL?.trim().replace(/\/+$/, '') ?? null;
+// Harus sama dengan nilai `site` di astro.config.mjs agar build tanpa SITE_URL tetap tervalidasi.
+const SITE_URL = (process.env.SITE_URL?.trim() || DEFAULT_SITE_URL).replace(/\/+$/, '');
 const PLACEHOLDER_PATTERNS = [
   /\blorem\b/i,
   /\bipsum\b/i,

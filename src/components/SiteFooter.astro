@@ -31,8 +31,24 @@ const navItems = mainNavigation.filter((item) => item.href !== '/');
 
     <div class="site-footer__contact">
       <p class="site-footer__heading">Kontak</p>
+      <ul class="site-footer__contact-list">
+        {
+          company.contact.email && (
+            <li>
+              <a href={`mailto:${company.contact.email}`}>{company.contact.email}</a>
+            </li>
+          )
+        }
+        {
+          company.contact.phoneHref && (
+            <li>
+              <a href={`tel:${company.contact.phoneHref}`}>{company.contact.phone}</a>
+            </li>
+          )
+        }
+      </ul>
       <p class="site-footer__note">
-        Kanal kontak resmi ditampilkan pada halaman kontak setelah diverifikasi oleh perusahaan.
+        {company.contact.address ?? 'Alamat kantor belum dipublikasikan.'}
       </p>
       <a class="site-footer__link" href="/kontak">Lihat halaman kontak</a>
     </div>
@@ -122,6 +138,28 @@ const navItems = mainNavigation.filter((item) => item.href !== '/');
     color: var(--on-navy);
     text-decoration: underline;
     text-underline-offset: 0.2em;
+  }
+
+  .site-footer__contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    margin-bottom: var(--space-3);
+  }
+
+  .site-footer__contact-list a {
+    color: var(--on-navy);
+    font-size: var(--text-sm);
+    text-decoration: underline;
+    text-underline-offset: 0.25em;
+    text-decoration-color: var(--on-navy-line);
+    text-decoration-thickness: 1px;
+    overflow-wrap: anywhere;
+  }
+
+  .site-footer__contact-list a:hover {
+    text-decoration-color: var(--on-navy);
+    text-decoration-thickness: 2px;
   }
 
   .site-footer__note {
