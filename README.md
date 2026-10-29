@@ -300,7 +300,10 @@ informasi yang hanya tersedia sebagai gambar.
   keputusan apakah bidang usaha dijelaskan sebagai perdagangan perangkat TI + layanan (lihat
   `CONTENT_REQUIREMENTS.md` butir 3).
 - Formulir kontak belum aktif → menunggu endpoint dan persetujuan kebijakan pengelolaan data.
-- Data yang masih `NEEDS_CONFIRMATION`: jam operasional, kategori barang/produk yang dijual, layanan
+- Jam operasional tampil sebagai `08.00–17.00 WIB`; **hari layanan belum ditetapkan**, sehingga situs
+  hanya menyebut jam tanpa hari dan `openingHoursSpecification` di structured data belum memuat
+  `dayOfWeek`.
+- Data yang masih `NEEDS_CONFIRMATION`: kategori barang/produk yang dijual, layanan
   operasional rinci, sejarah, visi-misi, wilayah layanan, dan profil manajemen (lihat
   `CONTENT_REQUIREMENTS.md`). Sampai data itu disetujui, situs sengaja menampilkan status kosong.
 - Label nomor kontak masih "Telepon" karena status WhatsApp belum dikonfirmasi, dan email yang dipakai

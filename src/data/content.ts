@@ -107,8 +107,12 @@ export const factSheet: FactRow[] = [
   { label: 'Bentuk badan usaha', value: company.entityType },
   { label: 'Skala usaha', value: company.scale },
   { label: 'Bidang usaha', value: company.sector },
-  { label: 'Alamat kantor', value: company.contact.address },
+  {
+    label: 'Alamat kantor',
+    value: company.contact.address,
+  },
   { label: 'Tahun berdiri', value: String(company.founded.year) },
+  { label: 'Jam operasional', value: company.contact.hours },
   {
     label: 'Nomor Induk Berusaha',
     value: `${company.legal.nib} (terbit ${company.legal.nibIssued})`,
@@ -149,6 +153,6 @@ export const contactChannels: ContactChannelRow[] = [
     label: 'Jam operasional',
     value: company.contact.hours,
     href: null,
-    note: 'Belum ditetapkan perusahaan.',
+    note: 'Waktu Indonesia Barat (UTC+7).',
   },
 ];

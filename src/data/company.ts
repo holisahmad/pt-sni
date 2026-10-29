@@ -42,7 +42,10 @@ export const company = {
     addressLocality: 'Gamping, Sleman' as string | null,
     addressRegion: 'Daerah Istimewa Yogyakarta' as string | null,
     postalCode: '55294' as string | null,
-    hours: null as string | null,
+    /** Jam layanan; hari layanan belum ditetapkan (lihat CONTENT_REQUIREMENTS.md). */
+    hours: '08.00–17.00 WIB' as string | null,
+    /** Bentuk 24 jam untuk structured data. */
+    hoursSpec: { opens: '08:00', closes: '17:00' } as { opens: string; closes: string } | null,
   },
   /** Identitas legal yang boleh dipublikasikan (NIB dan pengesahan pendirian). */
   legal: {

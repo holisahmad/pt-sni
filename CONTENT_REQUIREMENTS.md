@@ -43,9 +43,9 @@ repositori.
 | 5 | Tanggal pendirian | `APPROVED` | Fact sheet, structured data (`foundingDate`) | 14 Juli 2026 (akta) / 15 Juli 2026 (NIB terbit) |
 | 6 | Bidang usaha menurut KBLI 2025 | `APPROVED` | Beranda §02, `/layanan` | 47901, 53301, 47709 — lihat §2 |
 | 7 | Domisili / alamat terdaftar | `APPROVED` | `/kontak`, footer, fact sheet, structured data | Mejing Wetan RT 003/RW 004, Ambarketawang, Gamping, Sleman, DIY 55294 |
-| 8 | Email resmi | `APPROVED` | `/kontak`, footer, kebijakan privasi | `ptsentraniagatamaindonesia@gmail.com` (alamat Gmail; lihat §5 butir 1) |
+| 8 | Email resmi | `APPROVED` | `/kontak`, footer, kebijakan privasi | `ptsentraniagatamaindonesia@gmail.com` (alamat Gmail; lihat §6 butir 2) |
 | 9 | Nomor telepon | `PARTIAL` | `/kontak`, footer | `0822-3381-7057` (terdaftar di NIB). **Belum dikonfirmasi** apakah nomor ini juga dipakai untuk WhatsApp, sehingga label di situs adalah "Telepon" |
-| 10 | Jam operasional | `NEEDS_CONFIRMATION` | `/kontak` | Hari dan jam layanan, termasuk zona waktu. Saat ini baris "Jam operasional" menampilkan "Belum dipublikasikan" |
+| 10 | Jam operasional | `APPROVED` | `/kontak` (kanal resmi + catatan hero), fact sheet, structured data | `08.00–17.00 WIB`. **Belum ada:** hari layanan (mis. Senin–Jumat atau Senin–Sabtu), sehingga situs hanya menyebut jam tanpa hari |
 | 11 | Nama pendiri / pengurus | `NOT_APPLICABLE` | — | Tertera pada dokumen, tetapi tidak dipublikasikan atas keputusan pemilik data |
 | 12 | NPWP dan NIK | `NOT_APPLICABLE` | — | Tidak pernah disimpan di repositori dan tidak ditampilkan |
 
@@ -100,7 +100,8 @@ pernyataan resmi perusahaan).
 
 ## 6. Keputusan yang masih terbuka
 
-1. **Apakah email Gmail dipakai sebagai kanal resmi jangka panjang?** Alamat pada NIB adalah
+1. **Hari layanan belum ditetapkan.** Jam sudah disetujui (08.00–17.00 WIB), tetapi hari buka belum disebut. Setelah diputuskan, tambahkan pada `hours` di `company.ts` (mis. "Senin–Sabtu, 08.00–17.00 WIB") dan lengkapi `dayOfWeek` pada `openingHoursSpecification` di beranda.
+2. **Apakah email Gmail dipakai sebagai kanal resmi jangka panjang?** Alamat pada NIB adalah
    `ptsentraniagatamaindonesia@gmail.com`. Bila perusahaan menyiapkan email domain sendiri, ganti nilai di
    `company.ts` agar footer, `/kontak`, dan kebijakan privasi ikut berubah.
 2. **Apakah nomor `0822-3381-7057` aktif untuk WhatsApp?** Jika ya, label kanal dapat diubah menjadi

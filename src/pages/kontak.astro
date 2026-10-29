@@ -4,7 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ContactForm from '../components/ContactForm.astro';
 import { contactChannels } from '../data/content';
-import { contactFormEndpoint } from '../data/company';
+import { company, contactFormEndpoint } from '../data/company';
 
 const formEnabled = Boolean(contactFormEndpoint);
 ---
@@ -17,7 +17,9 @@ const formEnabled = Boolean(contactFormEndpoint);
     eyebrow="Hubungi Kami"
     title="Sampaikan kebutuhan Anda."
     intro="Halaman ini memuat kanal resmi PT Sentra Niagatama Indonesia untuk pertanyaan, permintaan penawaran, dan kerja sama bisnis."
-    note="Jam operasional layanan belum ditetapkan perusahaan."
+    note={company.contact.hours
+      ? `Jam operasional layanan: ${company.contact.hours}.`
+      : 'Jam operasional layanan belum ditetapkan perusahaan.'}
   />
 
   <section class="section" aria-labelledby="kanal-title">
