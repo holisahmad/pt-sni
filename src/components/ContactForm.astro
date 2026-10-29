@@ -1,0 +1,421 @@
+---
+import { inquiryTopics } from '../lib/inquiry';
+
+interface Props {
+  endpoint: string;
+}
+
+const { endpoint } = Astro.props;
+---
+
+<form class="contact-form" data-contact-form data-endpoint={endpoint} novalidate>
+  <div class="contact-form__grid">
+    <div class="field">
+      <label class="field__label" for="inquiry-name">
+        Nama <span class="field__required" aria-hidden="true">*</span>
+      </label>
+      <input
+        class="field__input"
+        id="inquiry-name"
+        name="name"
+        type="text"
+        autocomplete="name"
+        required
+        aria-describedby="inquiry-name-error"
+      />
+      <p class="field__error" id="inquiry-name-error" data-error-for="name" hidden></p>
+    </div>
+
+    <div class="field">
+      <label class="field__label" for="inquiry-organization">Perusahaan <span class="field__optional">(opsional)</span></label>
+      <input
+        class="field__input"
+        id="inquiry-organization"
+        name="organization"
+        type="text"
+        autocomplete="organization"
+        aria-describedby="inquiry-organization-error"
+      />
+      <p class="field__error" id="inquiry-organization-error" data-error-for="organization" hidden></p>
+    </div>
+
+    <div class="field">
+      <label class="field__label" for="inquiry-contact">
+        Email atau telepon <span class="field__required" aria-hidden="true">*</span>
+      </label>
+      <input
+        class="field__input"
+        id="inquiry-contact"
+        name="contact"
+        type="text"
+        inputmode="email"
+        autocomplete="email"
+        required
+        aria-describedby="inquiry-contact-hint inquiry-contact-error"
+      />
+      <p class="field__hint" id="inquiry-contact-hint">Kami membalas melalui alamat atau nomor ini.</p>
+      <p class="field__error" id="inquiry-contact-error" data-error-for="contact" hidden></p>
+    </div>
+
+    <div class="field">
+      <label class="field__label" for="inquiry-topic">
+        Topik <span class="field__required" aria-hidden="true">*</span>
+      </label>
+      <select
+        class="field__input field__select"
+        id="inquiry-topic"
+        name="topic"
+        required
+        aria-describedby="inquiry-topic-error"
+      >
+        <option value="">Pilih topik</option>
+        {inquiryTopics.map((topic) => <option value={topic}>{topic}</option>)}
+      </select>
+      <p class="field__error" id="inquiry-topic-error" data-error-for="topic" hidden></p>
+    </div>
+
+    <div class="field field--wide">
+      <label class="field__label" for="inquiry-message">
+        Pesan <span class="field__required" aria-hidden="true">*</span>
+      </label>
+      <textarea
+        class="field__input field__textarea"
+        id="inquiry-message"
+        name="message"
+        rows="6"
+        required
+        aria-describedby="inquiry-message-hint inquiry-message-error"
+      ></textarea>
+      <p class="field__hint" id="inquiry-message-hint">
+        Sertakan jenis barang, perkiraan jumlah, dan waktu yang diharapkan bila sudah tersedia.
+      </p>
+      <p class="field__error" id="inquiry-message-error" data-error-for="message" hidden></p>
+    </div>
+  </div>
+
+  <div class="field field--checkbox">
+    <input
+      class="field__checkbox"
+      id="inquiry-consent"
+      name="consent"
+      type="checkbox"
+      required
+      aria-describedby="inquiry-consent-error"
+    />
+    <div>
+      <label class="field__checkbox-label" for="inquiry-consent">
+        Saya setuju data yang saya kirim digunakan untuk menanggapi permintaan ini sesuai
+        <a href="/kebijakan-privasi">Kebijakan Privasi</a>.
+      </label>
+      <p class="field__error" id="inquiry-consent-error" data-error-for="consent" hidden></p>
+    </div>
+  </div>
+
+  <input type="text" name="_gotcha" class="honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+  <div class="contact-form__submit">
+    <button class="btn btn--primary" type="submit" data-submit>
+      <span data-submit-label>Kirim Pesan</span>
+    </button>
+    <p class="contact-form__status" role="status" aria-live="polite" data-form-status tabindex="-1"></p>
+  </div>
+</form>
+
+<style>
+  .contact-form__grid {
+    display: grid;
+    gap: var(--space-5) var(--space-6);
+  }
+
+  @media (min-width: 720px) {
+    .contact-form__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .field--wide {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .field__label {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--brand-navy);
+  }
+
+  .field__required {
+    color: var(--brand-red);
+    font-weight: 700;
+  }
+
+  .field__optional {
+    font-weight: 400;
+    color: var(--neutral-muted);
+  }
+
+  .field__input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.6875rem 0.875rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background-color: var(--neutral-white);
+    color: var(--neutral-ink);
+    font-size: var(--text-base);
+    line-height: 1.4;
+    transition: border-color var(--duration-fast) var(--ease-out);
+  }
+
+  .field__input::placeholder {
+    color: var(--neutral-muted);
+  }
+
+  .field__input:hover {
+    border-color: #b9c4cf;
+  }
+
+  .field__input:focus-visible {
+    border-color: var(--brand-navy);
+  }
+
+  .field__textarea {
+    min-height: 9rem;
+    resize: vertical;
+  }
+
+  .field__hint {
+    margin: 0;
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--neutral-muted);
+  }
+
+  .field__error {
+    margin: 0;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--brand-red);
+  }
+
+  .field__error[hidden] {
+    display: none;
+  }
+
+  .field__input[aria-invalid="true"] {
+    border-color: var(--brand-red);
+    box-shadow: inset 2px 0 0 var(--brand-red);
+  }
+
+  .field--checkbox {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: var(--space-3);
+    margin-top: var(--space-5);
+    padding-top: var(--space-5);
+    border-top: var(--border);
+  }
+
+  .field__checkbox {
+    width: 20px;
+    height: 20px;
+    margin: 2px 0 0;
+    flex: none;
+    accent-color: var(--brand-navy);
+  }
+
+  .field__checkbox-label {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--neutral-ink);
+  }
+
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .contact-form__submit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+  }
+
+  .contact-form__status {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--neutral-muted);
+    max-width: 52ch;
+  }
+
+  .contact-form__status[data-state="success"] {
+    color: #14602f;
+    font-weight: 500;
+  }
+
+  .contact-form__status[data-state="error"] {
+    color: var(--brand-red);
+  }
+
+  .contact-form__status[data-state="success"]::before,
+  .contact-form__status[data-state="error"]::before {
+    font-weight: 700;
+    margin-right: 0.35em;
+  }
+
+  .contact-form__status[data-state="success"]::before {
+    content: "\2713";
+  }
+
+  .contact-form__status[data-state="error"]::before {
+    content: "!";
+  }
+
+  button[data-submit][data-state="loading"] {
+    opacity: 0.75;
+    cursor: progress;
+  }
+</style>
+
+<script>
+  import {
+    buildInquiryPayload,
+    hasErrors,
+    inquiryTopics,
+    validateInquiry,
+    type InquiryErrors,
+    type InquiryField,
+    type InquiryInput,
+  } from '../lib/inquiry';
+
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+
+  if (form) {
+    const endpoint = form.dataset.endpoint ?? '';
+    const status = form.querySelector<HTMLElement>('[data-form-status]');
+    const submitButton = form.querySelector<HTMLButtonElement>('[data-submit]');
+    const submitLabel = form.querySelector<HTMLElement>('[data-submit-label]');
+
+    const setStatus = (message: string, state: 'idle' | 'success' | 'error') => {
+      if (!status) return;
+      status.textContent = message;
+      if (state === 'idle') {
+        status.removeAttribute('data-state');
+      } else {
+        status.dataset.state = state;
+      }
+    };
+
+    const clearError = (field: InquiryField) => {
+      const errorNode = form.querySelector<HTMLElement>(`[data-error-for="${field}"]`);
+      const input = form.querySelector<HTMLElement>(`[name="${field}"]`);
+      if (errorNode) {
+        errorNode.textContent = '';
+        errorNode.hidden = true;
+      }
+      input?.removeAttribute('aria-invalid');
+    };
+
+    const showErrors = (errors: InquiryErrors) => {
+      (Object.keys(errors) as InquiryField[]).forEach((field) => {
+        const errorNode = form.querySelector<HTMLElement>(`[data-error-for="${field}"]`);
+        const input = form.querySelector<HTMLElement>(`[name="${field}"]`);
+        if (errorNode) {
+          errorNode.textContent = errors[field] ?? '';
+          errorNode.hidden = false;
+        }
+        input?.setAttribute('aria-invalid', 'true');
+      });
+    };
+
+    const readInput = (): InquiryInput => {
+      const data = new FormData(form);
+      return {
+        name: String(data.get('name') ?? ''),
+        organization: String(data.get('organization') ?? ''),
+        contact: String(data.get('contact') ?? ''),
+        topic: String(data.get('topic') ?? ''),
+        message: String(data.get('message') ?? ''),
+        consent: data.get('consent') === 'on',
+      };
+    };
+
+    const isValidTopic = (value: string) => (inquiryTopics as readonly string[]).includes(value);
+
+    form.addEventListener('input', (event) => {
+      const target = event.target as HTMLElement | null;
+      const fieldName = target?.getAttribute('name');
+      if (fieldName && target?.getAttribute('aria-invalid') === 'true') {
+        clearError(fieldName as InquiryField);
+      }
+    });
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const input = readInput();
+      const errors = validateInquiry(input);
+      showErrors(errors);
+
+      if (hasErrors(errors)) {
+        setStatus('Periksa kembali isian yang ditandai sebelum mengirim.', 'error');
+        const firstInvalid = form.querySelector<HTMLElement>('[aria-invalid="true"]');
+        firstInvalid?.focus();
+        return;
+      }
+
+      if (!isValidTopic(input.topic) || endpoint.length === 0) {
+        setStatus('Formulir belum terhubung ke kanal resmi. Pesan tidak dikirim.', 'error');
+        return;
+      }
+
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.dataset.state = 'loading';
+      }
+      if (submitLabel) submitLabel.textContent = 'Mengirim...';
+      setStatus('Mengirim pesan...', 'idle');
+
+      try {
+        const response = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(buildInquiryPayload(input)),
+        });
+
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        form.reset();
+        setStatus(
+          'Pesan terkirim. Terima kasih, kami akan menindaklanjuti melalui kontak yang Anda berikan.',
+          'success',
+        );
+        status?.focus();
+      } catch {
+        setStatus(
+          'Pesan belum terkirim karena kendala teknis. Silakan coba lagi beberapa saat lagi.',
+          'error',
+        );
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+          delete submitButton.dataset.state;
+        }
+        if (submitLabel) submitLabel.textContent = 'Kirim Pesan';
+      }
+    });
+  }
+</script>

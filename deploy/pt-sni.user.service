@@ -1,0 +1,20 @@
+[Unit]
+Description=PT Sentra Niagatama Indonesia - company profile (Astro static, user service)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/holis/pt-sni
+Environment=NODE_ENV=production
+Environment=PORT=8080
+Environment=HOST=0.0.0.0
+ExecStart=/usr/bin/node /home/holis/pt-sni/deploy/serve.mjs
+Restart=always
+RestartSec=5
+TimeoutStopSec=20
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,108 @@
+---
+interface Props {
+  index: string;
+  label: string;
+  title: string;
+  intro?: string;
+  headingId?: string;
+}
+
+const { index, label, title, intro, headingId } = Astro.props;
+---
+
+<div class="section-block">
+  <p class="section-block__rail">
+    <span class="section-block__index">{index}</span>
+    <span class="marker" aria-hidden="true"></span>
+    <span class="section-block__label">{label}</span>
+  </p>
+
+  <div class="section-block__content">
+    <h2 id={headingId}>{title}</h2>
+    {intro ? <p class="section-block__intro">{intro}</p> : null}
+    <div class="section-block__body">
+      <slot />
+    </div>
+  </div>
+</div>
+
+<style>
+  .section-block {
+    display: grid;
+    gap: var(--space-5);
+  }
+
+  @media (min-width: 900px) {
+    .section-block {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+      column-gap: var(--space-9);
+      row-gap: var(--space-6);
+    }
+
+    .section-block__rail {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .section-block__content {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+  }
+
+  .section-block__rail {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin: 0;
+  }
+
+  @media (min-width: 900px) {
+    .section-block__rail {
+      padding-top: 0.45rem;
+    }
+  }
+
+  .section-block__index {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.08em;
+    color: var(--brand-navy);
+  }
+
+  .section-block__label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--neutral-muted);
+  }
+
+  .section-block__content h2 {
+    font-size: var(--text-3xl);
+    line-height: 1.15;
+    letter-spacing: -0.028em;
+    max-width: 26ch;
+  }
+
+  .section-block__intro {
+    margin-top: var(--space-4);
+    max-width: 60ch;
+    color: var(--neutral-muted);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+  }
+
+  .section-block__body:not(:empty) {
+    margin-top: var(--space-7);
+  }
+
+  :global(.section--navy) .section-block__index {
+    color: var(--on-navy);
+  }
+
+  :global(.section--navy) .section-block__label {
+    color: var(--on-navy-muted);
+  }
+</style>

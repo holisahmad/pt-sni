@@ -1,0 +1,193 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ContactForm from '../components/ContactForm.astro';
+import { contactChannels } from '../data/content';
+import { contactFormEndpoint } from '../data/company';
+
+const formEnabled = Boolean(contactFormEndpoint);
+---
+
+<BaseLayout
+  title="Hubungi Kami | PT Sentra Niagatama Indonesia"
+  description="Halaman kontak PT Sentra Niagatama Indonesia: kanal resmi, formulir, dan status informasi yang menunggu verifikasi perusahaan."
+>
+  <PageHero
+    eyebrow="Hubungi Kami"
+    title="Sampaikan kebutuhan Anda."
+    intro="Halaman ini memuat kanal resmi PT Sentra Niagatama Indonesia untuk pertanyaan, permintaan penawaran, dan kerja sama bisnis."
+    note="Data kontak resmi belum dipublikasikan. Halaman ini diperbarui setelah verifikasi perusahaan selesai."
+  />
+
+  <section class="section" aria-labelledby="kanal-title">
+    <div class="container">
+      <SectionHeading
+        index="01"
+        label="Kanal Resmi"
+        title="Kanal yang dapat digunakan."
+        headingId="kanal-title"
+      >
+        <dl class="channels">
+          {
+            contactChannels.map((channel) => (
+              <div class="channels__row">
+                <dt class="channels__label">{channel.label}</dt>
+                <dd class="channels__value">
+                  {channel.href ? (
+                    <a href={channel.href}>{channel.value}</a>
+                  ) : channel.value ? (
+                    channel.value
+                  ) : (
+                    <span class="channels__pending">Belum dipublikasikan</span>
+                  )}
+                </dd>
+                <dd class="channels__note">{channel.note}</dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        <p class="channels__disclaimer">
+          Kanal kontak hanya ditampilkan setelah terverifikasi. Situs ini tidak memuat alamat,
+          nomor telepon, atau email perkiraan.
+        </p>
+      </SectionHeading>
+    </div>
+  </section>
+
+  <section class="section section--canvas" aria-labelledby="formulir-title">
+    <div class="container">
+      <SectionHeading
+        index="02"
+        label="Formulir Kontak"
+        title="Formulir permintaan."
+        headingId="formulir-title"
+        intro={formEnabled
+          ? 'Isi formulir berikut untuk menyampaikan permintaan. Kolom bertanda * wajib diisi.'
+          : undefined}
+      >
+        {
+          contactFormEndpoint ? (
+            <ContactForm endpoint={contactFormEndpoint} />
+          ) : (
+            <div class="form-pending">
+              <p class="form-pending__title">Formulir belum diaktifkan</p>
+              <p class="form-pending__text">
+                Formulir akan diaktifkan bersama publikasi alamat email resmi perusahaan. Dengan
+                begitu, setiap pesan yang dikirim memiliki tujuan yang jelas dan dipantau.
+              </p>
+              <p class="form-pending__text">
+                Hingga kanal resmi ditetapkan, pesan tidak dapat dikirim melalui situs ini.
+              </p>
+            </div>
+          )
+        }
+
+        <p class="privacy-note">
+          Data yang dikirim melalui kanal kontak hanya digunakan untuk menanggapi permintaan.
+          Penjelasan lengkap tersedia pada <a href="/kebijakan-privasi">Kebijakan Privasi</a>.
+        </p>
+      </SectionHeading>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .channels {
+    margin: 0;
+    border-top: var(--border);
+  }
+
+  .channels__row {
+    display: grid;
+    gap: var(--space-1);
+    padding-block: var(--space-4);
+    border-bottom: var(--border);
+  }
+
+  @media (min-width: 900px) {
+    .channels__row {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 4fr) minmax(0, 5fr);
+      align-items: baseline;
+      gap: var(--space-5);
+    }
+  }
+
+  .channels__label {
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+  }
+
+  .channels__value {
+    margin: 0;
+    color: var(--neutral-ink);
+    font-size: var(--text-base);
+    font-weight: 500;
+    overflow-wrap: anywhere;
+  }
+
+  .channels__value a {
+    color: var(--brand-blue);
+  }
+
+  .channels__pending {
+    color: var(--neutral-muted);
+    font-weight: 400;
+  }
+
+  .channels__pending::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 1px;
+    margin-right: var(--space-2);
+    vertical-align: middle;
+    background-color: var(--neutral-line);
+  }
+
+  .channels__note {
+    margin: 0;
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+  }
+
+  .channels__disclaimer {
+    margin-top: var(--space-5);
+    max-width: 62ch;
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+  }
+
+  .form-pending {
+    border: var(--border);
+    border-left: 3px solid var(--brand-red);
+    padding: var(--space-5) var(--space-5) var(--space-4);
+    max-width: 64ch;
+    background-color: var(--neutral-white);
+  }
+
+  .form-pending__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--brand-navy);
+    letter-spacing: -0.015em;
+  }
+
+  .form-pending__text {
+    margin-top: var(--space-3);
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+  }
+
+  .privacy-note {
+    margin-top: var(--space-6);
+    max-width: 62ch;
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+  }
+</style>

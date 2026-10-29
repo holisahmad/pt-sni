@@ -1,0 +1,66 @@
+---
+import { processSteps } from '../data/content';
+---
+
+<ol class="process">
+  {
+    processSteps.map((step, position) => (
+      <li class="process__item">
+        <span class="process__number">{String(position + 1).padStart(2, '0')}</span>
+        <h3 class="process__title">{step.title}</h3>
+        <p class="process__description">{step.description}</p>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .process__item {
+    border-top: var(--border);
+    padding-block: var(--space-4) var(--space-5);
+  }
+
+  .process__number {
+    display: block;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.1em;
+    color: var(--brand-navy);
+  }
+
+  .process__title {
+    margin-top: var(--space-3);
+    font-size: 1.0625rem;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+  }
+
+  .process__description {
+    margin-top: var(--space-2);
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    max-width: 40ch;
+  }
+
+  @media (min-width: 900px) {
+    .process__item {
+      display: grid;
+      grid-template-columns: 3rem minmax(0, 15rem) minmax(0, 1fr);
+      column-gap: var(--space-6);
+      align-items: start;
+      padding-block: var(--space-5);
+    }
+
+    .process__title {
+      margin-top: 0;
+      font-size: 1.125rem;
+    }
+
+    .process__description {
+      margin-top: 0;
+      max-width: 52ch;
+    }
+  }
+</style>

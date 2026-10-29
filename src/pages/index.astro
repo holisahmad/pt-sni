@@ -1,0 +1,368 @@
+---
+import { ArrowRight } from '@lucide/astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ProcessDiagram from '../components/ProcessDiagram.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import { company } from '../data/company';
+import { principles } from '../data/content';
+
+const title = 'PT Sentra Niagatama Indonesia | Bidang Perdagangan';
+const description =
+  'PT Sentra Niagatama Indonesia bergerak di bidang perdagangan dengan proses bisnis yang jelas dan komunikasi yang profesional.';
+
+const organizationSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: company.legalName,
+  legalName: company.legalName,
+  description,
+  ...(Astro.site ? { url: Astro.site.href } : {}),
+};
+---
+
+<BaseLayout title={title} description={description}>
+  <script
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(organizationSchema)}
+  />
+
+  <section class="hero">
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <p class="eyebrow">
+          <span class="marker" aria-hidden="true"></span>
+          {company.legalName}
+        </p>
+        <h1 class="hero__title">Solusi Perdagangan untuk Kebutuhan Bisnis Anda.</h1>
+        <p class="hero__description">
+          PT Sentra Niagatama Indonesia bergerak di bidang perdagangan dan berfokus pada proses
+          bisnis yang jelas, komunikasi yang profesional, serta kebutuhan mitra yang ditangani
+          secara terstruktur.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn--primary" href="/kontak">
+            Hubungi Kami
+            <ArrowRight size={16} aria-hidden="true" />
+          </a>
+          <a class="btn btn--secondary" href="/tentang-kami">Kenali Perusahaan</a>
+        </div>
+      </div>
+
+      <div class="hero__visual" aria-hidden="true">
+        <div class="hero__visual-head">
+          <p class="hero__visual-label">Bidang usaha</p>
+          <span class="hero__visual-index">01</span>
+        </div>
+        <div class="hero__visual-foot">
+          <p class="hero__visual-value">Perdagangan</p>
+          <span class="hero__visual-rule"></span>
+          <p class="hero__visual-meta">PT Sentra Niagatama Indonesia</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="profil-title">
+    <div class="container">
+      <SectionHeading
+        index="01"
+        label="Profil Perusahaan"
+        title="Perusahaan dagang dengan proses yang dapat diikuti."
+        headingId="profil-title"
+      >
+        <div class="prose">
+          <p>
+            PT Sentra Niagatama Indonesia bergerak di bidang perdagangan. Fokus kami adalah
+            memastikan setiap kebutuhan mitra dipahami dengan jelas sebelum proses berjalan,
+            sehingga keputusan dapat diambil berdasarkan informasi yang sama.
+          </p>
+          <p>
+            Kami bekerja dengan struktur yang sederhana: kebutuhan diklarifikasi, spesifikasi
+            disepakati, lalu proses dijalankan sesuai kesepakatan tersebut.
+          </p>
+          <p>
+            <a class="link-arrow" href="/tentang-kami">Selengkapnya tentang perusahaan</a>
+          </p>
+        </div>
+      </SectionHeading>
+    </div>
+  </section>
+
+  <section class="section section--canvas" aria-labelledby="bidang-title">
+    <div class="container">
+      <SectionHeading
+        index="02"
+        label="Bidang Perdagangan"
+        title="Perdagangan sebagai inti usaha."
+        headingId="bidang-title"
+      >
+        <div class="bidang">
+          <div class="prose">
+            <p>
+              Sebagai perusahaan dagang, pekerjaan kami berpusat pada pemenuhan kebutuhan mitra
+              bisnis: memahami permintaan, menyepakati barang dan jumlahnya, serta menjaga agar
+              proses berjalan sesuai kesepakatan.
+            </p>
+          </div>
+
+          <div class="bidang__note">
+            <p class="bidang__note-title">Cakupan kategori barang</p>
+            <p class="bidang__note-text">
+              Rincian kategori barang dan cakupan layanan operasional akan dipublikasikan setelah
+              diverifikasi oleh perusahaan. Alur kerja yang berlaku dapat ditinjau lebih dahulu.
+            </p>
+            <a class="link-arrow" href="/layanan">Bidang perdagangan dan cara kerja</a>
+          </div>
+        </div>
+      </SectionHeading>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="cara-kerja-title">
+    <div class="container">
+      <SectionHeading
+        index="03"
+        label="Cara Kerja"
+        title="Alur kerja yang sederhana dan terdokumentasi."
+        headingId="cara-kerja-title"
+      >
+        <ProcessDiagram />
+        <p class="section-link">
+          <a class="link-arrow" href="/layanan#cara-kerja">Lihat detail alur kerja</a>
+        </p>
+      </SectionHeading>
+    </div>
+  </section>
+
+  <section class="section section--canvas" aria-labelledby="prinsip-title">
+    <div class="container">
+      <SectionHeading
+        index="04"
+        label="Prinsip Kerja"
+        title="Yang kami pegang dalam setiap proses."
+        headingId="prinsip-title"
+      >
+        <ul class="principles">
+          {
+            principles.map((principle) => (
+              <li class="principles__item">
+                <h3 class="principles__title">{principle.title}</h3>
+                <p class="principles__description">{principle.description}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </SectionHeading>
+    </div>
+  </section>
+
+  <ContactCTA />
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .hero {
+    padding-block: clamp(2.5rem, 6vw, 4.5rem) clamp(2.5rem, 6vw, 4.5rem);
+  }
+
+  .hero__inner {
+    display: grid;
+    gap: var(--space-8);
+  }
+
+  @media (min-width: 900px) {
+    .hero__inner {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+      align-items: stretch;
+      column-gap: var(--space-9);
+    }
+  }
+
+  .hero__title {
+    margin-top: var(--space-5);
+    max-width: 17ch;
+    font-size: var(--text-display);
+    line-height: 1.04;
+    letter-spacing: -0.032em;
+  }
+
+  .hero__description {
+    margin-top: var(--space-5);
+    max-width: 52ch;
+    color: var(--neutral-muted);
+    font-size: var(--text-lg);
+    line-height: 1.62;
+  }
+
+  @media (max-width: 380px) {
+    .hero__title {
+      font-size: 2rem;
+    }
+  }
+
+  .hero .btn-row {
+    margin-top: var(--space-7);
+  }
+
+  /* Komposisi editorial, bukan foto stok */
+  .hero__visual {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--space-8);
+    min-height: 260px;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    overflow: hidden;
+    background-color: var(--brand-navy);
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.09) 0 1px,
+      transparent 1px 32px
+    );
+  }
+
+  .hero__visual::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 96px;
+    background-color: var(--brand-red);
+  }
+
+  .hero__visual-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  .hero__visual-index {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.16em;
+    color: var(--on-navy-muted);
+  }
+
+  .hero__visual-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--on-navy-muted);
+  }
+
+  .hero__visual-foot {
+    position: relative;
+  }
+
+  .hero__visual-value {
+    color: var(--on-navy);
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .hero__visual-rule {
+    display: block;
+    height: 1px;
+    margin-block: var(--space-4) var(--space-3);
+    background-color: var(--on-navy-line);
+  }
+
+  .hero__visual-meta {
+    font-size: var(--text-xs);
+    letter-spacing: 0.02em;
+    color: var(--on-navy-muted);
+  }
+
+  @media (max-width: 479px) {
+    .hero .btn-row {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .hero .btn-row .btn {
+      width: 100%;
+    }
+  }
+
+  /* Bidang perdagangan */
+  .bidang {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 900px) {
+    .bidang {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      column-gap: var(--space-8);
+      align-items: start;
+    }
+  }
+
+  .bidang__note {
+    padding-left: var(--space-5);
+    border-left: 2px solid var(--brand-red);
+  }
+
+  .bidang__note-title {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--brand-navy);
+  }
+
+  .bidang__note-text {
+    margin-top: var(--space-3);
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    max-width: 40ch;
+  }
+
+  .bidang__note .link-arrow {
+    margin-top: var(--space-4);
+  }
+
+  .section-link {
+    margin-top: var(--space-6);
+  }
+
+  /* Prinsip kerja */
+  .principles {
+    display: grid;
+    gap: 0;
+  }
+
+  @media (min-width: 720px) {
+    .principles {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: var(--space-6);
+    }
+  }
+
+  .principles__item {
+    border-top: var(--border);
+    padding-block: var(--space-4) var(--space-5);
+  }
+
+  .principles__title {
+    font-size: 1.0625rem;
+    line-height: 1.35;
+  }
+
+  .principles__description {
+    margin-top: var(--space-2);
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+</style>

@@ -1,0 +1,101 @@
+---
+import { processSteps } from '../data/content';
+
+/**
+ * Diagram alur kerja untuk beranda: rel berpenanda + label.
+ * Teks tetap HTML (bukan bagian dari gambar) agar terbaca asisten layar dan
+ * tetap tajam saat diperbesar. Deskripsi lengkap tiap langkah ada di /layanan.
+ */
+---
+
+<ol class="flow">
+  {
+    processSteps.map((step, position) => (
+      <li class="flow__step">
+        <span class="flow__index">{String(position + 1).padStart(2, '0')}</span>
+        <h3 class="flow__title">{step.title}</h3>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .flow {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .flow__step {
+    position: relative;
+    padding: 0 0 var(--space-5) var(--space-5);
+    border-left: var(--border);
+  }
+
+  /* Penanda pada rel. Langkah pertama ditandai merah sebagai titik mulai. */
+  .flow__step::before {
+    content: "";
+    position: absolute;
+    top: 0.5rem;
+    left: -3px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: var(--brand-navy);
+  }
+
+  .flow__step:first-child::before {
+    background-color: var(--brand-red);
+  }
+
+  .flow__step:last-child {
+    padding-bottom: 0;
+    border-left-color: transparent;
+  }
+
+  .flow__index {
+    display: block;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.14em;
+    color: var(--neutral-muted);
+  }
+
+  .flow__title {
+    margin-top: var(--space-2);
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    letter-spacing: -0.012em;
+    max-width: 24ch;
+  }
+
+  @media (min-width: 720px) {
+    .flow {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .flow__step {
+      padding: var(--space-5) var(--space-5) 0 0;
+      border-left: 0;
+      border-top: var(--border);
+    }
+
+    .flow__step::before {
+      top: -3px;
+      left: 0;
+    }
+
+    .flow__step:last-child {
+      padding-right: 0;
+      border-left-color: var(--border-color);
+      border-top-color: var(--border-color);
+    }
+
+    .flow__title {
+      max-width: 18ch;
+    }
+  }
+</style>

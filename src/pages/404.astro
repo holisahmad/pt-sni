@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Halaman Tidak Ditemukan | PT Sentra Niagatama Indonesia"
+  description="Alamat yang Anda tuju tidak tersedia pada situs PT Sentra Niagatama Indonesia."
+  noindex
+>
+  <section class="not-found">
+    <div class="container">
+      <p class="eyebrow">
+        <span class="marker" aria-hidden="true"></span>
+        Kesalahan 404
+      </p>
+      <h1 class="not-found__title">Halaman tidak ditemukan.</h1>
+      <p class="not-found__text">
+        Alamat yang Anda buka tidak tersedia atau sudah dipindahkan. Gunakan tautan berikut untuk
+        melanjutkan.
+      </p>
+
+      <div class="btn-row not-found__actions">
+        <a class="btn btn--primary" href="/">Kembali ke Beranda</a>
+        <a class="btn btn--secondary" href="/kontak">Hubungi Kami</a>
+      </div>
+
+      <nav class="not-found__nav" aria-label="Tautan alternatif">
+        <ul>
+          <li><a href="/tentang-kami">Tentang Kami</a></li>
+          <li><a href="/layanan">Bidang Perdagangan</a></li>
+          <li><a href="/layanan#cara-kerja">Cara Kerja</a></li>
+          <li><a href="/kebijakan-privasi">Kebijakan Privasi</a></li>
+        </ul>
+      </nav>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .not-found {
+    padding-block: clamp(3.5rem, 8vw, 6.5rem);
+  }
+
+  .not-found__title {
+    margin-top: var(--space-5);
+    max-width: 18ch;
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+  }
+
+  .not-found__text {
+    margin-top: var(--space-5);
+    max-width: 52ch;
+    color: var(--neutral-muted);
+    font-size: var(--text-lg);
+    line-height: 1.6;
+  }
+
+  .not-found__actions {
+    margin-top: var(--space-7);
+  }
+
+  .not-found__nav {
+    margin-top: var(--space-9);
+    padding-top: var(--space-5);
+    border-top: var(--border);
+    max-width: 640px;
+  }
+
+  .not-found__nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) var(--space-6);
+  }
+
+  .not-found__nav a {
+    color: var(--brand-navy);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 2px;
+  }
+
+  .not-found__nav a:hover {
+    border-bottom-color: var(--brand-red);
+  }
+</style>

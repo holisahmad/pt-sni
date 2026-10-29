@@ -1,0 +1,20 @@
+# Dependensi
+node_modules/
+
+# Hasil build
+dist/
+.astro/
+
+# Berkas lingkungan
+.env
+.env.*
+!.env.example
+
+# Berkas sistem dan editor
+.DS_Store
+Thumbs.db
+*.log
+
+# Artefak perkakas IDE / agen
+.qoder/
+.freebuff/

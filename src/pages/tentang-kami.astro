@@ -1,0 +1,193 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import { factSheet, principles } from '../data/content';
+---
+
+<BaseLayout
+  title="Tentang Kami | PT Sentra Niagatama Indonesia"
+  description="Profil PT Sentra Niagatama Indonesia: bidang usaha, prinsip kerja, dan informasi perusahaan yang telah diverifikasi untuk publikasi."
+>
+  <PageHero
+    eyebrow="Tentang Kami"
+    title="Perusahaan dagang yang bekerja dengan struktur yang jelas."
+    intro="PT Sentra Niagatama Indonesia bergerak di bidang perdagangan. Halaman ini menjelaskan cara perusahaan bekerja dan informasi apa yang sudah dapat dipublikasikan."
+  />
+
+  <section class="section" aria-labelledby="profil-title">
+    <div class="container">
+      <SectionHeading
+        index="01"
+        label="Profil Perusahaan"
+        title="Kebutuhan dipahami lebih dahulu, keputusan diambil bersama."
+        headingId="profil-title"
+      >
+        <div class="prose">
+          <p>
+            PT Sentra Niagatama Indonesia bergerak di bidang perdagangan. Sebagai perusahaan
+            dagang, pekerjaan kami berpusat pada pemenuhan kebutuhan mitra bisnis: memahami
+            permintaan, menyepakati spesifikasi, dan menjaga agar proses berjalan sesuai
+            kesepakatan.
+          </p>
+          <p>
+            Kami menempatkan kejelasan informasi sebagai bagian dari proses kerja. Setiap kebutuhan
+            dibahas sampai detail yang relevan dipahami bersama, sehingga tidak ada asumsi yang
+            dibiarkan menggantikan kesepakatan.
+          </p>
+          <p>
+            Pendekatan ini berlaku untuk semua tahap: dari percakapan awal mengenai kebutuhan,
+            penyusunan penawaran, hingga konfirmasi setelah pekerjaan selesai. Setiap tahap
+            memiliki rujukan yang sama bagi kedua pihak.
+          </p>
+        </div>
+      </SectionHeading>
+    </div>
+  </section>
+
+  <section class="section section--canvas" aria-labelledby="prinsip-title">
+    <div class="container">
+      <SectionHeading
+        index="02"
+        label="Prinsip Kerja"
+        title="Tiga hal yang kami jaga dalam setiap proses."
+        headingId="prinsip-title"
+      >
+        <ul class="principles">
+          {
+            principles.map((principle) => (
+              <li class="principles__item">
+                <h3 class="principles__title">{principle.title}</h3>
+                <p class="principles__description">{principle.description}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </SectionHeading>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="informasi-title">
+    <div class="container">
+      <SectionHeading
+        index="03"
+        label="Informasi Perusahaan"
+        title="Data perusahaan yang dapat dipublikasikan."
+        headingId="informasi-title"
+      >
+        <dl class="fact-sheet">
+          {
+            factSheet.map((row) => (
+              <div class="fact-sheet__row">
+                <dt>{row.label}</dt>
+                <dd>
+                  {row.value ? (
+                    row.value
+                  ) : (
+                    <span class="fact-sheet__pending">Belum dipublikasikan</span>
+                  )}
+                </dd>
+              </div>
+            ))
+          }
+        </dl>
+        <p class="fact-sheet__note">
+          Data legalitas dan domisili hanya ditampilkan setelah dokumen perusahaan terverifikasi.
+          Kolom yang belum terisi sengaja dibiarkan kosong agar tidak ada informasi yang tidak
+          akurat.
+        </p>
+      </SectionHeading>
+    </div>
+  </section>
+
+  <ContactCTA />
+</BaseLayout>
+
+<style>
+  .principles {
+    display: grid;
+    gap: 0;
+  }
+
+  @media (min-width: 720px) {
+    .principles {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      column-gap: var(--space-6);
+    }
+  }
+
+  .principles__item {
+    border-top: var(--border);
+    padding-block: var(--space-4) var(--space-5);
+  }
+
+  .principles__title {
+    font-size: 1.0625rem;
+    line-height: 1.35;
+  }
+
+  .principles__description {
+    margin-top: var(--space-2);
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    max-width: 38ch;
+  }
+
+  .fact-sheet {
+    border-top: var(--border);
+    margin: 0;
+  }
+
+  .fact-sheet__row {
+    display: grid;
+    gap: var(--space-1);
+    padding-block: var(--space-4);
+    border-bottom: var(--border);
+  }
+
+  @media (min-width: 720px) {
+    .fact-sheet__row {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      align-items: baseline;
+      gap: var(--space-4);
+    }
+  }
+
+  .fact-sheet dt {
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+  }
+
+  .fact-sheet dd {
+    margin: 0;
+    color: var(--neutral-ink);
+    font-size: var(--text-base);
+    font-weight: 500;
+  }
+
+  .fact-sheet__pending {
+    color: var(--neutral-muted);
+    font-weight: 400;
+    font-style: normal;
+  }
+
+  .fact-sheet__pending::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 1px;
+    margin-right: var(--space-2);
+    vertical-align: middle;
+    background-color: var(--neutral-line);
+  }
+
+  .fact-sheet__note {
+    margin-top: var(--space-5);
+    max-width: 60ch;
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+  }
+</style>

@@ -1,0 +1,88 @@
+/* ==========================================================================
+   Design tokens — PT Sentra Niagatama Indonesia
+   Palet, tipografi, spacing, dan layout. Semua nilai visual berasal dari sini.
+   ========================================================================== */
+
+:root {
+  /* Warna merek */
+  --brand-navy: #102a43;
+  --brand-navy-deep: #0b1f33;
+  --brand-blue: #1d4ed8;
+  --brand-red: #c62828;
+  --brand-red-hover: #a61b1b;
+
+  /* Warna netral */
+  --neutral-white: #ffffff;
+  --neutral-canvas: #f5f7fa;
+  --neutral-ink: #17212b;
+  --neutral-muted: #5b6773;
+  --neutral-line: #d9e0e7;
+
+  /* Warna pada latar navy */
+  --on-navy: #ffffff;
+  --on-navy-muted: #c3ced9;
+  --on-navy-line: rgba(255, 255, 255, 0.16);
+
+  /* Tipografi */
+  --font-sans: "Inter Variable", "Inter", system-ui, -apple-system, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1.0625rem;
+  --text-lg: 1.1875rem;
+  --text-xl: clamp(1.25rem, 1.6vw, 1.375rem);
+  --text-2xl: clamp(1.5rem, 2.1vw, 1.875rem);
+  --text-3xl: clamp(1.75rem, 3.1vw, 2.5rem);
+  --text-display: clamp(2.25rem, 4.6vw, 3.5rem);
+
+  --leading-tight: 1.08;
+  --leading-snug: 1.3;
+  --leading-body: 1.65;
+
+  --tracking-tight: -0.022em;
+  --tracking-normal: -0.008em;
+  --tracking-label: 0.14em;
+
+  /* Spacing (basis 4px) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 2.5rem;
+  --space-8: 3rem;
+  --space-9: 4rem;
+  --space-10: 5rem;
+  --space-11: 6rem;
+
+  /* Layout */
+  --container-max: 1200px;
+  --container-gutter: clamp(1.25rem, 4vw, 3rem);
+  --container-wide-max: 1320px;
+  --measure: 62ch;
+  --measure-narrow: 46ch;
+
+  /* Border dan bayangan */
+  --border-width: 1px;
+  --border-color: var(--neutral-line);
+  --border: var(--border-width) solid var(--border-color);
+  --border-strong: var(--border-width) solid var(--brand-navy);
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --shadow-sm: 0 1px 2px rgba(16, 42, 67, 0.06);
+
+  /* Motion */
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+  --ease-out: cubic-bezier(0.24, 0.6, 0.36, 1);
+
+  /* Komponen */
+  --header-height: 76px;
+  --focus-ring: 2px solid var(--brand-blue);
+  --focus-offset: 3px;
+
+  /* Breakpoint referensi (dipakai dalam komentar media query):
+     sm 480px · md 720px · lg 900px · nav 1080px */
+}

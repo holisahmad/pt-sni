@@ -1,0 +1,420 @@
+---
+import { ArrowRight, Menu, X } from '@lucide/astro';
+import { mainNavigation } from '../data/content';
+import { company } from '../data/company';
+import { isActivePath } from '../lib/navigation';
+
+interface Props {
+  pathname: string;
+}
+
+const { pathname } = Astro.props;
+
+const navItems = mainNavigation.map((item) => ({
+  ...item,
+  isCurrent: isActivePath(pathname, item.activeOn),
+}));
+---
+
+<header class="site-header" data-site-header>
+  <div class="container site-header__inner">
+    <a class="wordmark" href="/" aria-label={`${company.legalName}, ke beranda`}>
+      {/* Lambang resmi (diekspos menjadi PNG transparan lewat scripts/prepare-logo-assets.mjs).
+          Teks di sampingnya sudah menyebut nama perusahaan, jadi gambar ditandai dekoratif. */}
+      <img
+        class="wordmark__mark"
+        src="/logo/sentra-mark.png"
+        alt=""
+        width="37"
+        height="34"
+        decoding="async"
+      />
+      <span class="wordmark__text">
+        <span class="wordmark__name">PT Sentra Niagatama</span>
+        <span class="wordmark__country">Indonesia</span>
+      </span>
+    </a>
+
+    <nav class="site-nav" aria-label="Navigasi utama">
+      <ul class="site-nav__list">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                class="site-nav__link"
+                href={item.href}
+                aria-current={item.isCurrent ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a class="btn btn--primary site-header__cta" href="/kontak">
+        Diskusikan Kebutuhan Bisnis
+        <ArrowRight size={16} aria-hidden="true" />
+      </a>
+
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="site-menu"
+        data-nav-toggle
+      >
+        <span class="nav-toggle__icon nav-toggle__icon--open" aria-hidden="true">
+          <Menu size={20} />
+        </span>
+        <span class="nav-toggle__icon nav-toggle__icon--close" aria-hidden="true">
+          <X size={20} />
+        </span>
+        <span class="nav-toggle__label">Menu</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="site-menu" id="site-menu" hidden data-site-menu>
+    <nav class="container site-menu__nav" aria-label="Navigasi seluler">
+      <ul class="site-menu__list">
+        {
+          navItems.map((item) => (
+            <li>
+              <a
+                class="site-menu__link"
+                href={item.href}
+                aria-current={item.isCurrent ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a class="btn btn--primary site-menu__cta" href="/kontak">
+        Diskusikan Kebutuhan Bisnis
+        <ArrowRight size={16} aria-hidden="true" />
+      </a>
+      <p class="site-menu__note">
+        Data kontak resmi ditampilkan pada halaman kontak setelah diverifikasi.
+      </p>
+    </nav>
+  </div>
+</header>
+
+<noscript>
+  <style>
+    .site-header [data-nav-toggle] {
+      display: none;
+    }
+    .site-header .site-menu[hidden] {
+      display: block !important;
+    }
+  </style>
+</noscript>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background-color: var(--neutral-white);
+    border-bottom: var(--border);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    min-height: 68px;
+  }
+
+  @media (min-width: 720px) {
+    .site-header__inner {
+      min-height: var(--header-height);
+    }
+  }
+
+  /* Wordmark: lambang resmi + nama perusahaan dalam teks */
+  .wordmark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-right: auto;
+    color: var(--brand-navy);
+    text-decoration: none;
+    line-height: 1;
+  }
+
+  .wordmark__mark {
+    flex: none;
+    width: auto;
+    height: 2.125rem;
+  }
+
+  .wordmark__text {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .wordmark__name {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.085em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .wordmark__country {
+    font-size: 0.5625rem;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--neutral-muted);
+    transition: color var(--duration-fast) var(--ease-out);
+  }
+
+  .wordmark:hover .wordmark__country,
+  .wordmark:focus-visible .wordmark__country {
+    color: var(--brand-navy);
+  }
+
+  @media (min-width: 480px) {
+    .wordmark__mark {
+      height: 2.375rem;
+    }
+
+    .wordmark__name {
+      font-size: 0.8125rem;
+    }
+  }
+
+  @media (max-width: 359px) {
+    .wordmark {
+      gap: 0.5rem;
+    }
+
+    .wordmark__mark {
+      height: 1.75rem;
+    }
+
+    .wordmark__name {
+      font-size: 0.6875rem;
+      letter-spacing: 0.06em;
+    }
+  }
+
+  /* Navigasi desktop */
+  .site-nav {
+    display: none;
+  }
+
+  .site-nav__list {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 1.8vw, 1.75rem);
+  }
+
+  .site-nav__link {
+    display: inline-flex;
+    align-items: center;
+    padding-block: 0.4rem;
+    border-bottom: 2px solid transparent;
+    color: var(--neutral-ink);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.4;
+    text-decoration: none;
+    transition:
+      color var(--duration-fast) var(--ease-out),
+      border-color var(--duration-fast) var(--ease-out);
+  }
+
+  .site-nav__link:hover {
+    color: var(--brand-navy);
+    border-bottom-color: var(--brand-red);
+  }
+
+  .site-nav__link[aria-current="page"] {
+    color: var(--brand-navy);
+    font-weight: 600;
+    border-bottom-color: var(--brand-red);
+  }
+
+  /* Aksi kanan */
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  .site-header__cta {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    background-color: var(--neutral-white);
+    color: var(--brand-navy);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .nav-toggle:hover {
+    border-color: var(--brand-navy);
+  }
+
+  .nav-toggle__icon {
+    display: inline-flex;
+  }
+
+  .nav-toggle__icon--close {
+    display: none;
+  }
+
+  .nav-toggle[aria-expanded="true"] .nav-toggle__icon--open {
+    display: none;
+  }
+
+  .nav-toggle[aria-expanded="true"] .nav-toggle__icon--close {
+    display: inline-flex;
+  }
+
+  /* Panel navigasi seluler */
+  .site-menu {
+    border-top: var(--border);
+    background-color: var(--neutral-white);
+    max-height: calc(100dvh - var(--header-height));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .site-menu[hidden] {
+    display: none;
+  }
+
+  .site-menu__nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding-block: var(--space-4) var(--space-6);
+  }
+
+  .site-menu__list {
+    border-top: var(--border);
+  }
+
+  .site-menu__list li {
+    border-bottom: var(--border);
+  }
+
+  .site-menu__link {
+    display: flex;
+    align-items: center;
+    min-height: 52px;
+    color: var(--neutral-ink);
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+  }
+
+  .site-menu__link[aria-current="page"] {
+    color: var(--brand-navy);
+    font-weight: 600;
+  }
+
+  .site-menu__link[aria-current="page"]::before {
+    content: "";
+    width: 3px;
+    height: 18px;
+    margin-right: var(--space-3);
+    background-color: var(--brand-red);
+  }
+
+  .site-menu__cta {
+    align-self: flex-start;
+    width: 100%;
+  }
+
+  .site-menu__note {
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    max-width: 44ch;
+  }
+
+  @media (min-width: 1120px) {
+    .site-nav {
+      display: block;
+    }
+
+    .site-header__cta {
+      display: inline-flex;
+    }
+
+    .nav-toggle {
+      display: none;
+    }
+
+    .site-menu {
+      display: none;
+    }
+  }
+
+  @media (max-width: 1119px) {
+    :global(html.nav-open),
+    :global(html.nav-open body) {
+      overflow: hidden;
+    }
+  }
+</style>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+  const panel = document.querySelector<HTMLElement>('[data-site-menu]');
+
+  if (toggle && panel) {
+    const breakpoint = window.matchMedia('(min-width: 1120px)');
+
+    const setOpen = (open: boolean) => {
+      toggle.setAttribute('aria-expanded', String(open));
+      panel.hidden = !open;
+      document.documentElement.classList.toggle('nav-open', open);
+    };
+
+    toggle.addEventListener('click', () => {
+      setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+    });
+
+    panel.addEventListener('click', (event) => {
+      if ((event.target as HTMLElement).closest('a')) {
+        setOpen(false);
+      }
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+
+    breakpoint.addEventListener('change', (event) => {
+      if (event.matches) setOpen(false);
+    });
+  }
+</script>

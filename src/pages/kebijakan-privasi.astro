@@ -1,0 +1,132 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { buildMonthLabel, contactFormEndpoint } from '../data/company';
+
+const formActive = Boolean(contactFormEndpoint);
+---
+
+<BaseLayout
+  title="Kebijakan Privasi | PT Sentra Niagatama Indonesia"
+  description="Penjelasan mengenai data yang diproses situs PT Sentra Niagatama Indonesia, penggunaan formulir, dan layanan pihak ketiga."
+>
+  <PageHero
+    eyebrow="Kebijakan Privasi"
+    title="Bagaimana situs ini menangani data."
+    intro="Halaman ini menjelaskan data apa yang diproses ketika Anda membuka situs ini, serta batasan yang berlaku."
+  />
+
+  <section class="section" aria-labelledby="data-title">
+    <div class="container">
+      <SectionHeading
+        index="01"
+        label="Data yang Diproses"
+        title="Profil perusahaan tanpa akun pengguna."
+        headingId="data-title"
+      >
+        <div class="prose">
+          <p>
+            Situs ini adalah profil perusahaan. Tidak ada akun pengguna, transaksi daring, atau
+            pendaftaran pada situs ini. Data pribadi hanya diproses apabila Anda mengirimkannya
+            melalui kanal kontak resmi perusahaan.
+          </p>
+          <p>
+            Penyedia hosting dapat mencatat data teknis standar seperti alamat IP, waktu akses,
+            jenis perangkat, dan halaman yang diminta. Catatan tersebut digunakan untuk keamanan
+            dan pemeliharaan layanan, bukan untuk pemasaran.
+          </p>
+        </div>
+      </SectionHeading>
+    </div>
+  </section>
+
+  <section class="section section--canvas" aria-labelledby="formulir-title">
+    <div class="container">
+      <SectionHeading
+        index="02"
+        label="Formulir Kontak"
+        title="Data yang Anda kirimkan."
+        headingId="formulir-title"
+      >
+        <div class="prose">
+          {
+            formActive ? (
+              <p>
+                Formulir kontak pada situs ini mengirimkan nama, nama perusahaan (opsional), email
+                atau telepon, topik, dan pesan. Data tersebut hanya digunakan untuk menanggapi
+                permintaan Anda dan tidak dijual atau digunakan untuk pemasaran tanpa persetujuan.
+              </p>
+            ) : (
+              <p>
+                Formulir kontak pada situs ini belum diaktifkan, sehingga tidak ada data yang
+                dikirim melalui formulir. Formulir hanya akan diaktifkan setelah alamat email resmi
+                perusahaan ditetapkan, agar tujuan pengiriman jelas dan dipantau.
+              </p>
+            )
+          }
+          <p>
+            Bila kanal kontak diaktifkan, data permintaan disimpan hanya selama diperlukan untuk
+            menindaklanjuti komunikasi dan kewajiban administratif yang berlaku.
+          </p>
+        </div>
+      </SectionHeading>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="pihak-ketiga-title">
+    <div class="container">
+      <SectionHeading
+        index="03"
+        label="Cookie dan Pihak Ketiga"
+        title="Tanpa pelacakan pengunjung."
+        headingId="pihak-ketiga-title"
+      >
+        <div class="prose">
+          <p>
+            Situs ini tidak menggunakan cookie pelacakan, layanan analitik, atau iklan. Tidak ada
+            profil pengunjung yang dibentuk dari kunjungan Anda.
+          </p>
+          <p>
+            Situs ini juga tidak menyematkan konten pihak ketiga seperti peta, pemutar video, atau
+            widget media sosial. Huruf (font) dimuat dari server situs ini sendiri, bukan dari
+            layanan eksternal.
+          </p>
+        </div>
+      </SectionHeading>
+    </div>
+  </section>
+
+  <section class="section section--canvas" aria-labelledby="pembaruan-title">
+    <div class="container">
+      <SectionHeading
+        index="04"
+        label="Pembaruan"
+        title="Perubahan pada kebijakan ini."
+        headingId="pembaruan-title"
+      >
+        <div class="prose">
+          <p>
+            Kebijakan ini diperbarui apabila ada perubahan pada fitur situs, kanal kontak, atau
+            cara data ditangani. Tanggal pembaruan tercantum di bawah.
+          </p>
+          <p>
+            Pertanyaan mengenai pengelolaan data dapat disampaikan melalui kanal kontak resmi
+            setelah kanal tersebut dipublikasikan pada halaman
+            <a href="/kontak">Hubungi Kami</a>.
+          </p>
+          <p class="privacy-updated">Terakhir diperbarui: {buildMonthLabel}</p>
+        </div>
+      </SectionHeading>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .privacy-updated {
+    padding-top: var(--space-4);
+    border-top: var(--border);
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+  }
+</style>

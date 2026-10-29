@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ProcessSteps from '../components/ProcessSteps.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+---
+
+<BaseLayout
+  title="Bidang Perdagangan | PT Sentra Niagatama Indonesia"
+  description="Bidang perdagangan PT Sentra Niagatama Indonesia beserta alur kerja dan informasi yang dibutuhkan untuk menyampaikan permintaan."
+>
+  <PageHero
+    eyebrow="Bidang Perdagangan"
+    title="Bidang usaha dan alur kerja yang kami gunakan."
+    intro="Halaman ini menjelaskan bidang usaha yang dijalankan PT Sentra Niagatama Indonesia serta alur kerja yang digunakan saat menangani permintaan mitra bisnis."
+  />
+
+  <section class="section" aria-labelledby="bidang-title">
+    <div class="container">
+      <SectionHeading
+        index="01"
+        label="Bidang Usaha"
+        title="Perdagangan."
+        headingId="bidang-title"
+      >
+        <div class="bidang">
+          <div class="prose">
+            <p>
+              Perdagangan merupakan bidang usaha utama PT Sentra Niagatama Indonesia. Setiap
+              keterlibatan dimulai dari pemahaman atas kebutuhan mitra, lalu dituangkan menjadi
+              kesepakatan kerja yang jelas mengenai barang, jumlah, dan ketentuan lain yang
+              relevan.
+            </p>
+            <p>
+              Ruang lingkup ditetapkan per kesepakatan. Dengan begitu, persyaratan kerja mengikuti
+              kebutuhan nyata mitra dan tidak bergantung pada asumsi umum.
+            </p>
+          </div>
+
+          <div class="bidang__note">
+            <p class="bidang__note-title">Cakupan kategori</p>
+            <p class="bidang__note-text">
+              Kategori barang yang ditangani dan cakupan layanan operasional belum dipublikasikan
+              pada situs ini. Informasi tersebut ditampilkan setelah melalui verifikasi perusahaan.
+            </p>
+          </div>
+        </div>
+      </SectionHeading>
+    </div>
+  </section>
+
+  <section class="section section--canvas" id="cara-kerja" aria-labelledby="cara-kerja-title">
+    <div class="container">
+      <SectionHeading
+        index="02"
+        label="Cara Kerja"
+        title="Lima tahap dari kebutuhan hingga tindak lanjut."
+        headingId="cara-kerja-title"
+        intro="Alur berikut menggambarkan urutan kerja yang digunakan untuk memastikan setiap permintaan ditangani dengan rujukan yang sama."
+      >
+        <ProcessSteps />
+      </SectionHeading>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="informasi-title">
+    <div class="container">
+      <SectionHeading
+        index="03"
+        label="Informasi untuk Permintaan"
+        title="Agar diskusi langsung masuk ke hal yang relevan."
+        headingId="informasi-title"
+        intro="Saat menyampaikan permintaan, sertakan informasi berikut bila sudah tersedia."
+      >
+        <ul class="checklist">
+          <li class="checklist__item">Jenis barang atau kategori yang dibutuhkan</li>
+          <li class="checklist__item">Spesifikasi teknis atau standar mutu, bila ada</li>
+          <li class="checklist__item">Perkiraan jumlah dan satuan</li>
+          <li class="checklist__item">Waktu atau jadwal kebutuhan</li>
+          <li class="checklist__item">Lokasi penerimaan barang, bila relevan</li>
+          <li class="checklist__item">Dokumen pendukung, bila diperlukan</li>
+        </ul>
+        <p class="checklist__note">
+          Informasi tersebut membantu penyusunan tanggapan yang sesuai. Kelengkapan data juga
+          mempercepat proses klarifikasi.
+        </p>
+      </SectionHeading>
+    </div>
+  </section>
+
+  <ContactCTA />
+</BaseLayout>
+
+<style>
+  .bidang {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 900px) {
+    .bidang {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      column-gap: var(--space-8);
+      align-items: start;
+    }
+  }
+
+  .bidang__note {
+    padding-left: var(--space-5);
+    border-left: 2px solid var(--brand-red);
+  }
+
+  .bidang__note-title {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--brand-navy);
+  }
+
+  .bidang__note-text {
+    margin-top: var(--space-3);
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    max-width: 38ch;
+  }
+
+  .checklist {
+    display: grid;
+    gap: 0;
+  }
+
+  @media (min-width: 720px) {
+    .checklist {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: var(--space-6);
+    }
+  }
+
+  .checklist__item {
+    position: relative;
+    padding-block: var(--space-4);
+    padding-left: var(--space-5);
+    border-top: var(--border);
+    font-size: var(--text-base);
+    line-height: 1.5;
+  }
+
+  .checklist__item::before {
+    content: "";
+    position: absolute;
+    top: 1.45rem;
+    left: 0;
+    width: 7px;
+    height: 7px;
+    background-color: var(--brand-red);
+  }
+
+  .checklist__note {
+    margin-top: var(--space-5);
+    max-width: 60ch;
+    color: var(--neutral-muted);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+  }
+</style>
